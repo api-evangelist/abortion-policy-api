@@ -1,1 +1,85 @@
-{}
+openapi: 3.1.0
+info:
+  title: Abortion Policy API
+  description: API providing abortion-related policies by state and zip code.
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+paths:
+  /{table}/states:
+    get:
+      summary: Get policies for all states
+      parameters:
+        - name: table
+          in: path
+          required: true
+          description: >-
+            The table to query (e.g., gestational_limits, insurance_coverage,
+            minors, waiting_periods)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with policies for all states
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+      security:
+        - ApiKeyAuth: []
+  /{table}/states/{state}:
+    get:
+      summary: Get policies for a specific state
+      parameters:
+        - name: table
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: state
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with policy data for a state
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - ApiKeyAuth: []
+  /{table}/zips/{zip}:
+    get:
+      summary: Get policies for a specific zip code
+      parameters:
+        - name: table
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: zip
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with policy data for a zip code
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - ApiKeyAuth: []
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: API key for authentication
