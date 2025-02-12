@@ -11,6 +11,8 @@ apis:
     properties:
       - url: ' https://www.abortionpolicyapi.com/'
         type: Documentation
+      - type: OpenAPI
+        url: properties/abortion-policy-api-openapi.yml
     description: >-
       The API consolidates these laws into one database for third-party
       developers to use. Our data tables include gestational limits, insurance
