@@ -1,5 +1,5 @@
 # Abortion Policy API (abortion-policy-api)
-The Abortion Policy API is a comprehensive tool that provides detailed and up-to-date information on abortion laws and regulations around the world. This API allows users to easily access data on the legality of abortion, gestational limits, and any restrictions or requirements that may apply in different countries. By utilizing this API, researchers, policymakers, and advocates can quickly gather accurate and reliable information to inform their work and decision-making processes. The Abortion Policy API plays a crucial role in promoting transparency and understanding of abortion policies on a global scale.
+The API consolidates these laws into one database for third-party developers to use. Our data tables include gestational limits, insurance coverage, minors and waiting periods. Read our documentation to learn more about the content of our API.  
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/abortion-policy-api/refs/heads/main/apis.yml)
 
@@ -28,11 +28,12 @@ The API consolidates these laws into one database for third-party developers to 
 
 #### Tags:
 
- - API
+ - Abortions, Policies
 
 #### Properties
 
 - [Documentation]( https://www.abortionpolicyapi.com/)
+- [OpenAPI](properties/abortion-policy-api-openapi.yml)
 
 ## Maintainers
 
