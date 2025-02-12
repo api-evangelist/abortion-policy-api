@@ -1,4 +1,4 @@
-executed: '2025-01-14T00:59:37.667Z'
+executed: '2025-02-12T22:57:06.775Z'
 results:
   - code: apis-json-specification-aid-info
     message: There is an aid.
@@ -185,7 +185,7 @@ results:
         line: 18
         character: 5
       end:
-        line: 19
+        line: 20
         character: 12
   - code: apis-json-tags-upper-case-info
     message: Tags Upper Case
@@ -200,6 +200,19 @@ results:
       end:
         line: 19
         character: 12
+  - code: apis-json-tags-upper-case-info
+    message: Tags Upper Case
+    path:
+      - tags
+      - '1'
+    severity: 2
+    range:
+      start:
+        line: 20
+        character: 4
+      end:
+        line: 20
+        character: 12
   - code: apis-json-specification-type-info
     message: There is a specification type.
     path:
@@ -207,10 +220,10 @@ results:
     severity: 2
     range:
       start:
-        line: 20
+        line: 21
         character: 6
       end:
-        line: 20
+        line: 21
         character: 14
   - code: apis-json-image-info
     message: There is an image.
@@ -219,10 +232,10 @@ results:
     severity: 2
     range:
       start:
-        line: 21
+        line: 22
         character: 7
       end:
-        line: 21
+        line: 22
         character: 80
   - code: apis-json-created-info
     message: There is a created date.
@@ -231,10 +244,10 @@ results:
     severity: 2
     range:
       start:
-        line: 23
+        line: 24
         character: 9
       end:
-        line: 23
+        line: 24
         character: 21
   - code: apis-json-modified-info
     message: There is a modified date.
@@ -243,10 +256,10 @@ results:
     severity: 2
     range:
       start:
-        line: 24
+        line: 25
         character: 10
       end:
-        line: 24
+        line: 25
         character: 22
   - code: apis-json-description-info
     message: There is a description.
@@ -255,11 +268,11 @@ results:
     severity: 2
     range:
       start:
-        line: 26
+        line: 27
         character: 13
       end:
-        line: 30
-        character: 12
+        line: 36
+        character: 15
   - code: apis-json-maintainers-info
     message: There is a maintainer object.
     path:
@@ -267,10 +280,10 @@ results:
     severity: 2
     range:
       start:
-        line: 31
+        line: 37
         character: 12
       end:
-        line: 33
+        line: 39
         character: 33
   - code: apis-json-maintainers-fn-info
     message: There is a FN property for maintainers.
@@ -281,10 +294,10 @@ results:
     severity: 2
     range:
       start:
-        line: 32
+        line: 38
         character: 8
       end:
-        line: 32
+        line: 38
         character: 16
   - code: apis-json-maintainers-email-info
     message: There is a email property for maintainers.
@@ -295,10 +308,10 @@ results:
     severity: 2
     range:
       start:
-        line: 33
+        line: 39
         character: 11
       end:
-        line: 33
+        line: 39
         character: 33
   - code: apis-json-specification-version-info
     message: There is a specification version.
@@ -307,8 +320,8 @@ results:
     severity: 2
     range:
       start:
-        line: 34
+        line: 40
         character: 22
       end:
-        line: 34
+        line: 40
         character: 28
