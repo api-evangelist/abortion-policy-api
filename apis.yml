@@ -5,7 +5,8 @@ apis:
   - aid: abortion-policy-api:abortion-policy-api
     name: Abortion Policy API
     tags:
-      - API
+      - Abortions
+      - Policies
     humanURL: ' https://www.abortionpolicyapi.com/'
     properties:
       - url: ' https://www.abortionpolicyapi.com/'
