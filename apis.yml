@@ -11,8 +11,8 @@ apis:
     properties:
       - url: ' https://www.abortionpolicyapi.com/'
         type: Documentation
-      - type: OpenAPI
-        url: properties/abortion-policy-api-openapi.yml
+      - url: properties/abortion-policy-api-openapi.yml
+        type: OpenAPI
     description: >-
       The API consolidates these laws into one database for third-party
       developers to use. Our data tables include gestational limits, insurance
@@ -37,3 +37,16 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
+common:
+  - name: Services 3  Abortion Policy API
+    description: 'null'
+    url: https://www.abortionpolicyapi.com/case-studies
+    type: CaseStudies
+  - name: FAQs 1  Abortion Policy API
+    description: 'null'
+    url: https://www.abortionpolicyapi.com/gettingstarted
+    type: GettingStarted
+  - name: Contact  Abortion Policy API
+    description: 'null'
+    url: https://www.abortionpolicyapi.com/contact
+    type: Contact
