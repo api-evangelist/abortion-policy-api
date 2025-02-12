@@ -35,6 +35,12 @@ The API consolidates these laws into one database for third-party developers to 
 - [Documentation]( https://www.abortionpolicyapi.com/)
 - [OpenAPI](properties/abortion-policy-api-openapi.yml)
 
+## Common Properties
+
+- [CaseStudies](https://www.abortionpolicyapi.com/case-studies)
+- [GettingStarted](https://www.abortionpolicyapi.com/gettingstarted)
+- [Contact](https://www.abortionpolicyapi.com/contact)
+
 ## Maintainers
 
 **FN:** Kin Lane
