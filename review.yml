@@ -1,4 +1,4 @@
-executed: '2025-02-12T23:02:27.360Z'
+executed: '2025-02-12T23:02:51.721Z'
 results:
   - code: apis-json-specification-aid-info
     message: There is an aid.
@@ -356,3 +356,71 @@ results:
       end:
         line: 38
         character: 28
+  - code: apis-json-common-info
+    message: There is an common property.
+    path:
+      - common
+    severity: 2
+    range:
+      start:
+        line: 39
+        character: 7
+      end:
+        line: 51
+        character: 17
+  - code: apis-json-apis-properties-url-info
+    message: Property URLs Are Valid
+    path:
+      - common
+      - '0'
+      - url
+    severity: 2
+    range:
+      start:
+        line: 42
+        character: 9
+      end:
+        line: 42
+        character: 55
+  - code: apis-json-apis-properties-url-info
+    message: Property URLs Are Valid
+    path:
+      - common
+      - '1'
+      - url
+    severity: 2
+    range:
+      start:
+        line: 46
+        character: 9
+      end:
+        line: 46
+        character: 57
+  - code: apis-json-apis-properties-getting-started-info
+    message: Has Getting Started
+    path:
+      - common
+      - '1'
+      - type
+    severity: 2
+    range:
+      start:
+        line: 47
+        character: 10
+      end:
+        line: 47
+        character: 24
+  - code: apis-json-apis-properties-url-info
+    message: Property URLs Are Valid
+    path:
+      - common
+      - '2'
+      - url
+    severity: 2
+    range:
+      start:
+        line: 50
+        character: 9
+      end:
+        line: 50
+        character: 50
