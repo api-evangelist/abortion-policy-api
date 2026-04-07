@@ -30,6 +30,8 @@ paths:
                   type: object
       security:
         - ApiKeyAuth: []
+      tags:
+        - States
   /{table}/states/{state}:
     get:
       summary: Abortion Policy API Get policies for a specific state
@@ -53,6 +55,8 @@ paths:
                 type: object
       security:
         - ApiKeyAuth: []
+      tags:
+        - States
   /{table}/zips/{zip}:
     get:
       summary: Abortion Policy API Get policies for a specific zip code
@@ -76,6 +80,8 @@ paths:
                 type: object
       security:
         - ApiKeyAuth: []
+      tags:
+        - Zips
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -83,3 +89,6 @@ components:
       in: header
       name: token
       description: API key for authentication
+tags:
+  - name: States
+  - name: Zips
