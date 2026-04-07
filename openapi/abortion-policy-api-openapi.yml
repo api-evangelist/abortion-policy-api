@@ -9,7 +9,7 @@ servers:
 paths:
   /{table}/states:
     get:
-      summary: Get policies for all states
+      summary: Abortion Policy API Get policies for all states
       parameters:
         - name: table
           in: path
@@ -32,7 +32,7 @@ paths:
         - ApiKeyAuth: []
   /{table}/states/{state}:
     get:
-      summary: Get policies for a specific state
+      summary: Abortion Policy API Get policies for a specific state
       parameters:
         - name: table
           in: path
@@ -55,7 +55,7 @@ paths:
         - ApiKeyAuth: []
   /{table}/zips/{zip}:
     get:
-      summary: Get policies for a specific zip code
+      summary: Abortion Policy API Get policies for a specific zip code
       parameters:
         - name: table
           in: path
