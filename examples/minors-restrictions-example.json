@@ -1,0 +1,9 @@
+{
+  "below_age": 18,
+  "parents_required": 1,
+  "parental_consent_required": false,
+  "parental_notification_required": false,
+  "judicial_bypass_available": false,
+  "allows_minor_to_consent": true,
+  "Last Updated": "2025-01-15"
+}

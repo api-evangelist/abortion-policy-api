@@ -1,0 +1,289 @@
+rules:
+
+  # INFO / METADATA
+  info-title-required:
+    description: API info must have a title.
+    severity: error
+    given: $.info
+    then:
+      field: title
+      function: truthy
+
+  info-title-format:
+    description: API title should follow the "Abortion Policy API ..." naming pattern.
+    severity: warn
+    given: $.info.title
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Abortion Policy API"
+
+  info-description-required:
+    description: API info must have a description.
+    severity: error
+    given: $.info
+    then:
+      field: description
+      function: truthy
+
+  info-version-required:
+    description: API info must have a version.
+    severity: error
+    given: $.info
+    then:
+      field: version
+      function: truthy
+
+  # OPENAPI VERSION
+  openapi-version:
+    description: API must use OpenAPI 3.x.
+    severity: error
+    given: $
+    then:
+      field: openapi
+      function: pattern
+      functionOptions:
+        match: "^3\\."
+
+  # SERVERS
+  servers-required:
+    description: At least one server must be defined.
+    severity: error
+    given: $
+    then:
+      field: servers
+      function: truthy
+
+  server-https-required:
+    description: All server URLs must use HTTPS.
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  server-description-required:
+    description: Each server should have a description.
+    severity: warn
+    given: $.servers[*]
+    then:
+      field: description
+      function: truthy
+
+  # PATHS — NAMING CONVENTIONS
+  paths-kebab-case:
+    description: Path segments should use kebab-case or underscore_case.
+    severity: warn
+    given: $.paths
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9_-]+(/[a-z0-9_-]+|/\\{[a-zA-Z0-9_]+\\})*)+$"
+
+  # OPERATIONS
+  operation-summary-required:
+    description: Every operation must have a summary.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: summary
+      function: truthy
+
+  operation-summary-prefix:
+    description: Operation summaries should start with "Abortion Policy API".
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].summary
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Abortion Policy API"
+
+  operation-description-required:
+    description: Every operation should have a description.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: description
+      function: truthy
+
+  operation-operationid-required:
+    description: Every operation must have an operationId.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationid-camelcase:
+    description: OperationIds must use camelCase.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].operationId
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  operation-tags-required:
+    description: Every operation must have at least one tag.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: tags
+      function: truthy
+
+  # TAGS
+  tags-array-defined:
+    description: Global tags array should be defined.
+    severity: warn
+    given: $
+    then:
+      field: tags
+      function: truthy
+
+  tag-description-required:
+    description: Each global tag should have a description.
+    severity: warn
+    given: $.tags[*]
+    then:
+      field: description
+      function: truthy
+
+  tag-name-title-case:
+    description: Tag names should use Title Case.
+    severity: warn
+    given: $.tags[*].name
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z]*(\\s[A-Z][a-zA-Z]*)*$"
+
+  # PARAMETERS
+  parameter-description-required:
+    description: All parameters must have a description.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].parameters[*]
+    then:
+      field: description
+      function: truthy
+
+  parameter-schema-required:
+    description: All parameters must have a schema.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].parameters[*]
+    then:
+      field: schema
+      function: truthy
+
+  # RESPONSES
+  response-success-required:
+    description: Every operation must have at least one 2xx response.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ['200']
+            - required: ['201']
+            - required: ['204']
+
+  response-401-required:
+    description: Every authenticated operation should have a 401 response.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          required: ['401']
+
+  response-description-required:
+    description: All responses must have a description.
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].responses[*]
+    then:
+      field: description
+      function: truthy
+
+  # SCHEMAS — PROPERTY NAMING
+  schema-property-description:
+    description: Top-level schemas should have descriptions.
+    severity: warn
+    given: $.components.schemas[*]
+    then:
+      field: description
+      function: truthy
+
+  schema-type-defined:
+    description: All schemas should have a type defined.
+    severity: warn
+    given: $.components.schemas[*]
+    then:
+      field: type
+      function: truthy
+
+  # SECURITY
+  security-schemes-defined:
+    description: Security schemes must be defined in components.
+    severity: error
+    given: $.components
+    then:
+      field: securitySchemes
+      function: truthy
+
+  security-scheme-description:
+    description: Security schemes should have descriptions.
+    severity: warn
+    given: $.components.securitySchemes[*]
+    then:
+      field: description
+      function: truthy
+
+  operation-security-defined:
+    description: Every operation should have security defined.
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete]
+    then:
+      field: security
+      function: truthy
+
+  # HTTP METHOD CONVENTIONS
+  get-no-request-body:
+    description: GET operations must not have a request body.
+    severity: error
+    given: $.paths[*].get
+    then:
+      field: requestBody
+      function: falsy
+
+  delete-no-request-body:
+    description: DELETE operations must not have a request body.
+    severity: warn
+    given: $.paths[*].delete
+    then:
+      field: requestBody
+      function: falsy
+
+  # GENERAL QUALITY
+  no-empty-descriptions:
+    description: Descriptions must not be empty strings.
+    severity: error
+    given: $..description
+    then:
+      function: pattern
+      functionOptions:
+        match: ".+"
+
+  examples-encouraged:
+    description: Operations should have examples for better developer experience.
+    severity: info
+    given: $.paths[*][get,post,put,patch,delete].responses[*].content[*]
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ['example']
+            - required: ['examples']

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/abortion-policy-api/refs/heads/main/json-structure/waiting-periods-structure.json",
+  "name": "WaitingPeriods",
+  "description": "Abortion waiting period restrictions in a US state, covering mandatory time between counseling and abortion care.",
+  "type": "object",
+  "properties": {
+    "waiting_period_hours": {
+      "type": "int32",
+      "nullable": true,
+      "description": "Hours a person must wait between receiving state-mandated counseling and obtaining abortion. Null means no waiting period.",
+      "example": 24
+    },
+    "counseling_visits": {
+      "type": "int32",
+      "nullable": true,
+      "description": "1=counseling required by state; 2=counseling must be at the facility, requiring two clinic trips.",
+      "example": 1
+    },
+    "exception_health": {
+      "type": "string",
+      "nullable": true,
+      "description": "Conditions under which waiting period may be waived.",
+      "example": "Medical emergency"
+    },
+    "waiting_period_notes": {
+      "type": "string",
+      "nullable": true,
+      "description": "Additional notes on unusual waiting period policies.",
+      "example": "Waiting period waived in medical emergencies."
+    },
+    "counseling_waived_condition": {
+      "type": "string",
+      "nullable": true,
+      "description": "Conditions under which counseling requirement can be waived.",
+      "example": "Medical emergency"
+    },
+    "Last Updated": {
+      "type": "string",
+      "description": "Date this policy record was last updated.",
+      "example": "2025-01-15"
+    }
+  }
+}

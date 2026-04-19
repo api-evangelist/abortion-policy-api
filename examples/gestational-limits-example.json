@@ -1,0 +1,8 @@
+{
+  "banned_after_weeks_since_LMP": 24,
+  "exception_life": true,
+  "exception_health": "Any",
+  "exception_fetal": "Serious fetal anomaly",
+  "exception_rape_or_incest": true,
+  "Last Updated": "2025-01-15"
+}

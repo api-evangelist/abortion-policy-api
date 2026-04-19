@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/abortion-policy-api/refs/heads/main/json-structure/insurance-coverage-structure.json",
+  "name": "InsuranceCoverage",
+  "description": "Abortion insurance coverage restrictions covering Medicaid, private insurance, and ACA exchange plans for a US state.",
+  "type": "object",
+  "properties": {
+    "requires_coverage": {
+      "type": "boolean",
+      "description": "If true, state requires private health plans to cover abortion.",
+      "example": false
+    },
+    "private_coverage_no_restrictions": {
+      "type": "boolean",
+      "description": "If true, private insurance may cover abortion without restrictions.",
+      "example": true
+    },
+    "private_exception_life": {
+      "type": "boolean",
+      "description": "If true, private insurance coverage allowed when abortion is necessary to save pregnant person's life.",
+      "example": true
+    },
+    "private_exception_health": {
+      "type": "string",
+      "nullable": true,
+      "description": "Private insurance coverage allowed for serious health conditions described by this field.",
+      "example": "Major Bodily Function"
+    },
+    "private_exception_fetal": {
+      "type": "string",
+      "nullable": true,
+      "description": "Private insurance coverage allowed for described fetal anomaly types.",
+      "example": "Lethal fetal anomaly"
+    },
+    "private_exception_rape_or_incest": {
+      "type": "boolean",
+      "description": "If true, private insurance coverage allowed in cases of rape or incest.",
+      "example": true
+    },
+    "exchange_coverage_no_restrictions": {
+      "type": "boolean",
+      "description": "If true, state has not restricted abortion coverage in ACA exchange plans.",
+      "example": true
+    },
+    "exchange_exception_life": {
+      "type": "boolean",
+      "description": "If true, exchange plan coverage allowed when abortion is necessary to save pregnant person's life.",
+      "example": true
+    },
+    "exchange_exception_health": {
+      "type": "string",
+      "nullable": true,
+      "description": "Exchange plan coverage allowed for health conditions described by this field.",
+      "example": "Physical"
+    },
+    "exchange_exception_fetal": {
+      "type": "string",
+      "nullable": true,
+      "description": "Exchange plan coverage allowed for described fetal anomaly types.",
+      "example": "Lethal fetal anomaly"
+    },
+    "exchange_exception_rape_or_incest": {
+      "type": "boolean",
+      "description": "If true, exchange plan coverage allowed in cases of rape or incest.",
+      "example": true
+    },
+    "exchange_forbids_coverage": {
+      "type": "boolean",
+      "description": "If true, state prohibits all exchange insurance coverage for abortion.",
+      "example": false
+    },
+    "medicaid_coverage_provider_patient_decision": {
+      "type": "boolean",
+      "description": "If true, state uses Medicaid funds for medically necessary abortion determined by patient/provider.",
+      "example": true
+    },
+    "medicaid_exception_life": {
+      "type": "boolean",
+      "description": "If true, Medicaid covers abortion necessary to save pregnant person's life (required by Hyde Amendment).",
+      "example": true
+    },
+    "medicaid_exception_health": {
+      "type": "string",
+      "nullable": true,
+      "description": "Medicaid coverage for health conditions described by this field.",
+      "example": "Physical"
+    },
+    "medicaid_exception_fetal": {
+      "type": "string",
+      "nullable": true,
+      "description": "Medicaid coverage for described fetal anomaly types.",
+      "example": "Serious fetal anomaly"
+    },
+    "medicaid_exception_rape_or_incest": {
+      "type": "boolean",
+      "description": "If true, Medicaid covers abortion in cases of rape or incest (required by Hyde Amendment).",
+      "example": true
+    },
+    "Last Updated": {
+      "type": "string",
+      "description": "Date this policy record was last updated.",
+      "example": "2025-01-15"
+    }
+  }
+}

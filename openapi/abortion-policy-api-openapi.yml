@@ -1,94 +1,789 @@
 openapi: 3.1.0
 info:
   title: Abortion Policy API
-  description: API providing abortion-related policies by state and zip code.
+  description: >-
+    The Abortion Policy API provides up-to-date information on state abortion policies
+    that can be integrated into online abortion resources. The API consolidates abortion
+    laws into one database across four data tables: gestational limits, insurance coverage,
+    minors restrictions, and waiting periods. Data is accessible by US state name or
+    zip code. Authentication requires an API key provided upon request.
   version: 1.0.0
+  contact:
+    url: https://www.abortionpolicyapi.com/contact
+  license:
+    name: API License Agreement
+    url: https://www.abortionpolicyapi.com/terms
+  x-generated-from: documentation
 servers:
-  - url: https://api.example.com/v1
+  - url: https://api.abortionpolicyapi.com/v1
     description: Production server
 paths:
-  /{table}/states:
+  /gestational_limits/states:
     get:
-      summary: Abortion Policy API Get policies for all states
-      parameters:
-        - name: table
-          in: path
-          required: true
-          description: >-
-            The table to query (e.g., gestational_limits, insurance_coverage,
-            minors, waiting_periods)
-          schema:
-            type: string
+      operationId: getGestationalLimitsAllStates
+      summary: Abortion Policy API Get Gestational Limits for All States
+      description: Returns the restrictions on abortion access related to gestational limits for all US states and territories.
+      tags:
+        - Gestational Limits
+      security:
+        - ApiKeyAuth: []
       responses:
         '200':
-          description: Successful response with policies for all states
+          description: Successful response with gestational limit policies for all states
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties:
-                  type: object
+                  $ref: '#/components/schemas/GestationalLimits'
+              examples:
+                GetGestationalLimitsAllStates200Example:
+                  summary: Default getGestationalLimitsAllStates 200 response
+                  x-microcks-default: true
+                  value:
+                    California:
+                      banned_after_weeks_since_LMP: null
+                      exception_life: true
+                      exception_health: Any
+                      exception_fetal: Serious fetal anomaly
+                      exception_rape_or_incest: true
+                      Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /gestational_limits/states/{state}:
+    get:
+      operationId: getGestationalLimitsByState
+      summary: Abortion Policy API Get Gestational Limits by State
+      description: Returns the restrictions on abortion access related to gestational limits for a specific US state.
+      tags:
+        - Gestational Limits
       security:
         - ApiKeyAuth: []
-      tags:
-        - States
-  /{table}/states/{state}:
-    get:
-      summary: Abortion Policy API Get policies for a specific state
       parameters:
-        - name: table
-          in: path
-          required: true
-          schema:
-            type: string
         - name: state
           in: path
           required: true
+          description: The state name (e.g., California, Texas, New York)
           schema:
             type: string
+            example: California
       responses:
         '200':
-          description: Successful response with policy data for a state
+          description: Successful response with gestational limit policy for the specified state
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/GestationalLimits'
+              examples:
+                GetGestationalLimitsByState200Example:
+                  summary: Default getGestationalLimitsByState 200 response
+                  x-microcks-default: true
+                  value:
+                    banned_after_weeks_since_LMP: null
+                    exception_life: true
+                    exception_health: Any
+                    exception_fetal: Serious fetal anomaly
+                    exception_rape_or_incest: true
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: State not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /gestational_limits/zips/{zip}:
+    get:
+      operationId: getGestationalLimitsByZip
+      summary: Abortion Policy API Get Gestational Limits by Zip Code
+      description: Returns the restrictions on abortion access related to gestational limits for a specific zip code.
+      tags:
+        - Gestational Limits
       security:
         - ApiKeyAuth: []
-      tags:
-        - States
-  /{table}/zips/{zip}:
-    get:
-      summary: Abortion Policy API Get policies for a specific zip code
       parameters:
-        - name: table
-          in: path
-          required: true
-          schema:
-            type: string
         - name: zip
           in: path
           required: true
+          description: The 5-digit US zip code
           schema:
             type: string
+            example: '90210'
       responses:
         '200':
-          description: Successful response with policy data for a zip code
+          description: Successful response with gestational limit policy for the specified zip code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GestationalLimits'
+              examples:
+                GetGestationalLimitsByZip200Example:
+                  summary: Default getGestationalLimitsByZip 200 response
+                  x-microcks-default: true
+                  value:
+                    banned_after_weeks_since_LMP: null
+                    exception_life: true
+                    exception_health: Any
+                    exception_fetal: Serious fetal anomaly
+                    exception_rape_or_incest: true
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Zip code not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /insurance_coverage/states:
+    get:
+      operationId: getInsuranceCoverageAllStates
+      summary: Abortion Policy API Get Insurance Coverage for All States
+      description: Returns abortion insurance coverage restrictions for all US states, covering Medicaid, private insurance, and ACA exchange plans.
+      tags:
+        - Insurance Coverage
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response with insurance coverage policies for all states
           content:
             application/json:
               schema:
                 type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/InsuranceCoverage'
+              examples:
+                GetInsuranceCoverageAllStates200Example:
+                  summary: Default getInsuranceCoverageAllStates 200 response
+                  x-microcks-default: true
+                  value:
+                    California:
+                      requires_coverage: true
+                      private_coverage_no_restrictions: true
+                      medicaid_coverage_provider_patient_decision: true
+                      medicaid_exception_life: true
+                      Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /insurance_coverage/states/{state}:
+    get:
+      operationId: getInsuranceCoverageByState
+      summary: Abortion Policy API Get Insurance Coverage by State
+      description: Returns abortion insurance coverage restrictions for a specific US state, covering Medicaid, private insurance, and ACA exchange plans.
+      tags:
+        - Insurance Coverage
       security:
         - ApiKeyAuth: []
+      parameters:
+        - name: state
+          in: path
+          required: true
+          description: The state name (e.g., California, Texas, New York)
+          schema:
+            type: string
+            example: California
+      responses:
+        '200':
+          description: Successful response with insurance coverage policy for the specified state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsuranceCoverage'
+              examples:
+                GetInsuranceCoverageByState200Example:
+                  summary: Default getInsuranceCoverageByState 200 response
+                  x-microcks-default: true
+                  value:
+                    requires_coverage: true
+                    private_coverage_no_restrictions: true
+                    medicaid_coverage_provider_patient_decision: true
+                    medicaid_exception_life: true
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: State not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /insurance_coverage/zips/{zip}:
+    get:
+      operationId: getInsuranceCoverageByZip
+      summary: Abortion Policy API Get Insurance Coverage by Zip Code
+      description: Returns abortion insurance coverage restrictions for a specific zip code.
       tags:
-        - Zips
+        - Insurance Coverage
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: zip
+          in: path
+          required: true
+          description: The 5-digit US zip code
+          schema:
+            type: string
+            example: '90210'
+      responses:
+        '200':
+          description: Successful response with insurance coverage policy for the specified zip code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsuranceCoverage'
+              examples:
+                GetInsuranceCoverageByZip200Example:
+                  summary: Default getInsuranceCoverageByZip 200 response
+                  x-microcks-default: true
+                  value:
+                    requires_coverage: true
+                    private_coverage_no_restrictions: true
+                    medicaid_coverage_provider_patient_decision: true
+                    medicaid_exception_life: true
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Zip code not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /minors/states:
+    get:
+      operationId: getMinorsAllStates
+      summary: Abortion Policy API Get Minors Restrictions for All States
+      description: Returns abortion restrictions that specifically target minors for all US states.
+      tags:
+        - Minors
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response with minors restriction policies for all states
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/MinorsRestrictions'
+              examples:
+                GetMinorsAllStates200Example:
+                  summary: Default getMinorsAllStates 200 response
+                  x-microcks-default: true
+                  value:
+                    California:
+                      below_age: 18
+                      parental_consent_required: false
+                      parental_notification_required: false
+                      allows_minor_to_consent: true
+                      judicial_bypass_available: false
+                      Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /minors/states/{state}:
+    get:
+      operationId: getMinorsByState
+      summary: Abortion Policy API Get Minors Restrictions by State
+      description: Returns abortion restrictions that specifically target minors for a specific US state.
+      tags:
+        - Minors
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: state
+          in: path
+          required: true
+          description: The state name (e.g., California, Texas, New York)
+          schema:
+            type: string
+            example: California
+      responses:
+        '200':
+          description: Successful response with minors restriction policy for the specified state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MinorsRestrictions'
+              examples:
+                GetMinorsByState200Example:
+                  summary: Default getMinorsByState 200 response
+                  x-microcks-default: true
+                  value:
+                    below_age: 18
+                    parental_consent_required: false
+                    parental_notification_required: false
+                    allows_minor_to_consent: true
+                    judicial_bypass_available: false
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: State not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /minors/zips/{zip}:
+    get:
+      operationId: getMinorsByZip
+      summary: Abortion Policy API Get Minors Restrictions by Zip Code
+      description: Returns abortion restrictions that specifically target minors for a specific zip code.
+      tags:
+        - Minors
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: zip
+          in: path
+          required: true
+          description: The 5-digit US zip code
+          schema:
+            type: string
+            example: '90210'
+      responses:
+        '200':
+          description: Successful response with minors restriction policy for the specified zip code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MinorsRestrictions'
+              examples:
+                GetMinorsByZip200Example:
+                  summary: Default getMinorsByZip 200 response
+                  x-microcks-default: true
+                  value:
+                    below_age: 18
+                    parental_consent_required: false
+                    parental_notification_required: false
+                    allows_minor_to_consent: true
+                    judicial_bypass_available: false
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Zip code not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /waiting_periods/states:
+    get:
+      operationId: getWaitingPeriodsAllStates
+      summary: Abortion Policy API Get Waiting Periods for All States
+      description: Returns abortion waiting period restrictions for all US states.
+      tags:
+        - Waiting Periods
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response with waiting period policies for all states
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/WaitingPeriods'
+              examples:
+                GetWaitingPeriodsAllStates200Example:
+                  summary: Default getWaitingPeriodsAllStates 200 response
+                  x-microcks-default: true
+                  value:
+                    California:
+                      waiting_period_hours: null
+                      counseling_visits: null
+                      exception_health: null
+                      waiting_period_notes: No waiting period required.
+                      Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /waiting_periods/states/{state}:
+    get:
+      operationId: getWaitingPeriodsByState
+      summary: Abortion Policy API Get Waiting Periods by State
+      description: Returns abortion waiting period restrictions for a specific US state.
+      tags:
+        - Waiting Periods
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: state
+          in: path
+          required: true
+          description: The state name (e.g., California, Texas, New York)
+          schema:
+            type: string
+            example: California
+      responses:
+        '200':
+          description: Successful response with waiting period policy for the specified state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaitingPeriods'
+              examples:
+                GetWaitingPeriodsByState200Example:
+                  summary: Default getWaitingPeriodsByState 200 response
+                  x-microcks-default: true
+                  value:
+                    waiting_period_hours: null
+                    counseling_visits: null
+                    exception_health: null
+                    waiting_period_notes: No waiting period required.
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: State not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /waiting_periods/zips/{zip}:
+    get:
+      operationId: getWaitingPeriodsByZip
+      summary: Abortion Policy API Get Waiting Periods by Zip Code
+      description: Returns abortion waiting period restrictions for a specific zip code.
+      tags:
+        - Waiting Periods
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: zip
+          in: path
+          required: true
+          description: The 5-digit US zip code
+          schema:
+            type: string
+            example: '90210'
+      responses:
+        '200':
+          description: Successful response with waiting period policy for the specified zip code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaitingPeriods'
+              examples:
+                GetWaitingPeriodsByZip200Example:
+                  summary: Default getWaitingPeriodsByZip 200 response
+                  x-microcks-default: true
+                  value:
+                    waiting_period_hours: null
+                    counseling_visits: null
+                    exception_health: null
+                    waiting_period_notes: No waiting period required.
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Zip code not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
       name: token
-      description: API key for authentication
+      description: API key for authentication. Request access at https://www.abortionpolicyapi.com/request-access
+  schemas:
+    GestationalLimits:
+      title: GestationalLimits
+      description: Abortion restrictions related to gestational limits (bans after certain weeks of pregnancy) for a US state or territory.
+      type: object
+      properties:
+        banned_after_weeks_since_LMP:
+          type: integer
+          nullable: true
+          description: >-
+            Weeks since Last Menstrual Period (LMP) after which abortion is banned.
+            Null means no gestational restriction. 99 means viability standard. 28 means
+            third trimester ban. 0 means complete ban.
+          example: 24
+        exception_life:
+          type: boolean
+          description: If true, abortion is permitted when necessary to save the pregnant person's life.
+          example: true
+        exception_health:
+          type: string
+          nullable: true
+          description: >-
+            Health exception type. "Physical" (excluding mental health), "Any" (may include
+            mental health), or "Major Bodily Function" (substantial irreversible impairment).
+          example: Any
+        exception_fetal:
+          type: string
+          nullable: true
+          description: Fetal anomaly exception type. "Serious fetal anomaly" or "Lethal fetal anomaly".
+          example: Serious fetal anomaly
+        exception_rape_or_incest:
+          type: boolean
+          description: If true, exceptions may be granted in cases of rape or incest.
+          example: true
+        Last Updated:
+          type: string
+          description: Date this policy record was last updated.
+          example: '2025-01-15'
+    InsuranceCoverage:
+      title: InsuranceCoverage
+      description: Abortion insurance coverage restrictions covering Medicaid, private insurance, and ACA exchange plans for a US state.
+      type: object
+      properties:
+        requires_coverage:
+          type: boolean
+          description: If true, state requires private health plans to cover abortion.
+          example: false
+        private_coverage_no_restrictions:
+          type: boolean
+          description: If true, private insurance may cover abortion without restrictions.
+          example: true
+        private_exception_life:
+          type: boolean
+          description: If true, private insurance coverage allowed when abortion is necessary to save pregnant person's life.
+          example: true
+        private_exception_health:
+          type: string
+          nullable: true
+          description: Private insurance coverage allowed for serious health conditions described by this field.
+          example: Major Bodily Function
+        private_exception_fetal:
+          type: string
+          nullable: true
+          description: Private insurance coverage allowed for described fetal anomaly types.
+          example: Lethal fetal anomaly
+        private_exception_rape_or_incest:
+          type: boolean
+          description: If true, private insurance coverage allowed in cases of rape or incest.
+          example: true
+        exchange_coverage_no_restrictions:
+          type: boolean
+          description: If true, state has not restricted abortion coverage in ACA exchange plans.
+          example: true
+        exchange_exception_life:
+          type: boolean
+          description: If true, exchange plan coverage allowed when abortion is necessary to save pregnant person's life.
+          example: true
+        exchange_exception_health:
+          type: string
+          nullable: true
+          description: Exchange plan coverage allowed for health conditions described by this field.
+          example: Physical
+        exchange_exception_fetal:
+          type: string
+          nullable: true
+          description: Exchange plan coverage allowed for described fetal anomaly types.
+          example: Lethal fetal anomaly
+        exchange_exception_rape_or_incest:
+          type: boolean
+          description: If true, exchange plan coverage allowed in cases of rape or incest.
+          example: true
+        exchange_forbids_coverage:
+          type: boolean
+          description: If true, state prohibits all exchange insurance coverage for abortion.
+          example: false
+        medicaid_coverage_provider_patient_decision:
+          type: boolean
+          description: If true, state uses Medicaid funds for medically necessary abortion determined by patient/provider.
+          example: true
+        medicaid_exception_life:
+          type: boolean
+          description: If true, Medicaid covers abortion necessary to save pregnant person's life (required by Hyde Amendment).
+          example: true
+        medicaid_exception_health:
+          type: string
+          nullable: true
+          description: Medicaid coverage for health conditions described by this field.
+          example: Physical
+        medicaid_exception_fetal:
+          type: string
+          nullable: true
+          description: Medicaid coverage for described fetal anomaly types.
+          example: Serious fetal anomaly
+        medicaid_exception_rape_or_incest:
+          type: boolean
+          description: If true, Medicaid covers abortion in cases of rape or incest (required by Hyde Amendment).
+          example: true
+        Last Updated:
+          type: string
+          description: Date this policy record was last updated.
+          example: '2025-01-15'
+    MinorsRestrictions:
+      title: MinorsRestrictions
+      description: Abortion restrictions that specifically target minors in a US state.
+      type: object
+      properties:
+        below_age:
+          type: integer
+          nullable: true
+          description: Age below which restrictions apply. Null means no restrictions currently enforced.
+          example: 18
+        parents_required:
+          type: integer
+          nullable: true
+          description: Number of parents required to be notified. 1=one parent, 2=both parents, null=no restrictions.
+          example: 1
+        parental_consent_required:
+          type: boolean
+          description: If true, parent(s) must give permission for the minor to have an abortion.
+          example: false
+        parental_notification_required:
+          type: boolean
+          description: If true, parent(s) must be told beforehand of the minor's decision.
+          example: false
+        judicial_bypass_available:
+          type: boolean
+          description: If true, a judge can excuse a minor from parental consent/notification requirements.
+          example: false
+        allows_minor_to_consent:
+          type: boolean
+          description: If true, state explicitly or implicitly allows a minor to consent to abortion.
+          example: true
+        Last Updated:
+          type: string
+          description: Date this policy record was last updated.
+          example: '2025-01-15'
+    WaitingPeriods:
+      title: WaitingPeriods
+      description: Abortion waiting period restrictions in a US state, covering mandatory time between counseling and abortion care.
+      type: object
+      properties:
+        waiting_period_hours:
+          type: integer
+          nullable: true
+          description: Hours a person must wait between receiving state-mandated counseling and obtaining abortion. Null means no waiting period.
+          example: 24
+        counseling_visits:
+          type: integer
+          nullable: true
+          description: "1=counseling required by state; 2=counseling must be at the facility, requiring two clinic trips."
+          example: 1
+        exception_health:
+          type: string
+          nullable: true
+          description: Conditions under which waiting period may be waived.
+          example: Medical emergency
+        waiting_period_notes:
+          type: string
+          nullable: true
+          description: Additional notes on unusual waiting period policies.
+          example: Waiting period waived in medical emergencies.
+        counseling_waived_condition:
+          type: string
+          nullable: true
+          description: Conditions under which counseling requirement can be waived.
+          example: Medical emergency
+        Last Updated:
+          type: string
+          description: Date this policy record was last updated.
+          example: '2025-01-15'
+    Error:
+      title: Error
+      description: Error response returned when a request fails.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong.
+          example: Unauthorized - invalid API key
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 401
 tags:
-  - name: States
-  - name: Zips
+  - name: Gestational Limits
+    description: Endpoints for retrieving gestational limit abortion policies by state or zip code.
+  - name: Insurance Coverage
+    description: Endpoints for retrieving abortion insurance coverage restrictions by state or zip code.
+  - name: Minors
+    description: Endpoints for retrieving abortion restrictions targeting minors by state or zip code.
+  - name: Waiting Periods
+    description: Endpoints for retrieving abortion waiting period restrictions by state or zip code.

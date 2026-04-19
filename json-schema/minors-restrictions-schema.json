@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/abortion-policy-api/refs/heads/main/json-schema/minors-restrictions-schema.json",
+  "title": "MinorsRestrictions",
+  "description": "Abortion restrictions that specifically target minors in a US state.",
+  "type": "object",
+  "properties": {
+    "below_age": {
+      "type": "integer",
+      "nullable": true,
+      "description": "Age below which restrictions apply. Null means no restrictions currently enforced.",
+      "example": 18
+    },
+    "parents_required": {
+      "type": "integer",
+      "nullable": true,
+      "description": "Number of parents required to be notified. 1=one parent, 2=both parents, null=no restrictions.",
+      "example": 1
+    },
+    "parental_consent_required": {
+      "type": "boolean",
+      "description": "If true, parent(s) must give permission for the minor to have an abortion.",
+      "example": false
+    },
+    "parental_notification_required": {
+      "type": "boolean",
+      "description": "If true, parent(s) must be told beforehand of the minor's decision.",
+      "example": false
+    },
+    "judicial_bypass_available": {
+      "type": "boolean",
+      "description": "If true, a judge can excuse a minor from parental consent/notification requirements.",
+      "example": false
+    },
+    "allows_minor_to_consent": {
+      "type": "boolean",
+      "description": "If true, state explicitly or implicitly allows a minor to consent to abortion.",
+      "example": true
+    },
+    "Last Updated": {
+      "type": "string",
+      "description": "Date this policy record was last updated.",
+      "example": "2025-01-15"
+    }
+  }
+}

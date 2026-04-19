@@ -1,0 +1,145 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "abortion": "https://abortionpolicyapi.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "WaitingPeriods": "abortion:WaitingPeriods",
+    "waitingPeriodHours": {
+      "@id": "abortion:waiting_period_hours",
+      "@type": "xsd:integer"
+    },
+    "counselingVisits": {
+      "@id": "abortion:counseling_visits",
+      "@type": "xsd:integer"
+    },
+    "exceptionHealth": {
+      "@id": "abortion:exception_health",
+      "@type": "xsd:string"
+    },
+    "waitingPeriodNotes": {
+      "@id": "abortion:waiting_period_notes",
+      "@type": "xsd:string"
+    },
+    "counselingWaivedCondition": {
+      "@id": "abortion:counseling_waived_condition",
+      "@type": "xsd:string"
+    },
+    "LastUpdated": {
+      "@id": "abortion:Last Updated",
+      "@type": "xsd:string"
+    },
+    "MinorsRestrictions": "abortion:MinorsRestrictions",
+    "belowAge": {
+      "@id": "abortion:below_age",
+      "@type": "xsd:integer"
+    },
+    "parentsRequired": {
+      "@id": "abortion:parents_required",
+      "@type": "xsd:integer"
+    },
+    "parentalConsentRequired": {
+      "@id": "abortion:parental_consent_required",
+      "@type": "xsd:boolean"
+    },
+    "parentalNotificationRequired": {
+      "@id": "abortion:parental_notification_required",
+      "@type": "xsd:boolean"
+    },
+    "judicialBypassAvailable": {
+      "@id": "abortion:judicial_bypass_available",
+      "@type": "xsd:boolean"
+    },
+    "allowsMinorToConsent": {
+      "@id": "abortion:allows_minor_to_consent",
+      "@type": "xsd:boolean"
+    },
+    "InsuranceCoverage": "abortion:InsuranceCoverage",
+    "requiresCoverage": {
+      "@id": "abortion:requires_coverage",
+      "@type": "xsd:boolean"
+    },
+    "privateCoverageNoRestrictions": {
+      "@id": "abortion:private_coverage_no_restrictions",
+      "@type": "xsd:boolean"
+    },
+    "privateExceptionLife": {
+      "@id": "abortion:private_exception_life",
+      "@type": "xsd:boolean"
+    },
+    "privateExceptionHealth": {
+      "@id": "abortion:private_exception_health",
+      "@type": "xsd:string"
+    },
+    "privateExceptionFetal": {
+      "@id": "abortion:private_exception_fetal",
+      "@type": "xsd:string"
+    },
+    "privateExceptionRapeOrIncest": {
+      "@id": "abortion:private_exception_rape_or_incest",
+      "@type": "xsd:boolean"
+    },
+    "exchangeCoverageNoRestrictions": {
+      "@id": "abortion:exchange_coverage_no_restrictions",
+      "@type": "xsd:boolean"
+    },
+    "exchangeExceptionLife": {
+      "@id": "abortion:exchange_exception_life",
+      "@type": "xsd:boolean"
+    },
+    "exchangeExceptionHealth": {
+      "@id": "abortion:exchange_exception_health",
+      "@type": "xsd:string"
+    },
+    "exchangeExceptionFetal": {
+      "@id": "abortion:exchange_exception_fetal",
+      "@type": "xsd:string"
+    },
+    "exchangeExceptionRapeOrIncest": {
+      "@id": "abortion:exchange_exception_rape_or_incest",
+      "@type": "xsd:boolean"
+    },
+    "exchangeForbidsCoverage": {
+      "@id": "abortion:exchange_forbids_coverage",
+      "@type": "xsd:boolean"
+    },
+    "medicaidCoverageProviderPatientDecision": {
+      "@id": "abortion:medicaid_coverage_provider_patient_decision",
+      "@type": "xsd:boolean"
+    },
+    "medicaidExceptionLife": {
+      "@id": "abortion:medicaid_exception_life",
+      "@type": "xsd:boolean"
+    },
+    "medicaidExceptionHealth": {
+      "@id": "abortion:medicaid_exception_health",
+      "@type": "xsd:string"
+    },
+    "medicaidExceptionFetal": {
+      "@id": "abortion:medicaid_exception_fetal",
+      "@type": "xsd:string"
+    },
+    "medicaidExceptionRapeOrIncest": {
+      "@id": "abortion:medicaid_exception_rape_or_incest",
+      "@type": "xsd:boolean"
+    },
+    "GestationalLimits": "abortion:GestationalLimits",
+    "bannedAfterWeeksSinceLmp": {
+      "@id": "abortion:banned_after_weeks_since_LMP",
+      "@type": "xsd:integer"
+    },
+    "exceptionLife": {
+      "@id": "abortion:exception_life",
+      "@type": "xsd:boolean"
+    },
+    "exceptionFetal": {
+      "@id": "abortion:exception_fetal",
+      "@type": "xsd:string"
+    },
+    "exceptionRapeOrIncest": {
+      "@id": "abortion:exception_rape_or_incest",
+      "@type": "xsd:boolean"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "waiting_period_hours": 24,
+  "counseling_visits": 1,
+  "exception_health": "Medical emergency",
+  "waiting_period_notes": "Waiting period waived in medical emergencies.",
+  "counseling_waived_condition": "Medical emergency",
+  "Last Updated": "2025-01-15"
+}

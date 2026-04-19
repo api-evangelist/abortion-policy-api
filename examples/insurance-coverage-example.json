@@ -1,0 +1,20 @@
+{
+  "requires_coverage": false,
+  "private_coverage_no_restrictions": true,
+  "private_exception_life": true,
+  "private_exception_health": "Major Bodily Function",
+  "private_exception_fetal": "Lethal fetal anomaly",
+  "private_exception_rape_or_incest": true,
+  "exchange_coverage_no_restrictions": true,
+  "exchange_exception_life": true,
+  "exchange_exception_health": "Physical",
+  "exchange_exception_fetal": "Lethal fetal anomaly",
+  "exchange_exception_rape_or_incest": true,
+  "exchange_forbids_coverage": false,
+  "medicaid_coverage_provider_patient_decision": true,
+  "medicaid_exception_life": true,
+  "medicaid_exception_health": "Physical",
+  "medicaid_exception_fetal": "Serious fetal anomaly",
+  "medicaid_exception_rape_or_incest": true,
+  "Last Updated": "2025-01-15"
+}

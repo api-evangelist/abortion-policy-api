@@ -1,0 +1,238 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Abortion Policy API"
+  description: "Vocabulary covering US state abortion policy data including gestational limits, insurance coverage, minors restrictions, and waiting periods."
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - namespace: abortion-policy-api
+      version: "1.0.0"
+      baseUrl: https://api.abortionpolicyapi.com/v1
+      status: active
+      description: "US state abortion policy data API"
+
+  resources:
+    - name: gestational-limits
+      apis:
+        - abortion-policy-api
+      actions:
+        - get-all-states
+        - get-by-state
+        - get-by-zip
+      description: "Restrictions on abortion access based on gestational age"
+
+    - name: insurance-coverage
+      apis:
+        - abortion-policy-api
+      actions:
+        - get-all-states
+        - get-by-state
+        - get-by-zip
+      description: "Insurance coverage restrictions for abortion (Medicaid, private, ACA exchange)"
+
+    - name: minors-restrictions
+      apis:
+        - abortion-policy-api
+      actions:
+        - get-all-states
+        - get-by-state
+        - get-by-zip
+      description: "Abortion access restrictions specifically targeting minors"
+
+    - name: waiting-periods
+      apis:
+        - abortion-policy-api
+      actions:
+        - get-all-states
+        - get-by-state
+        - get-by-zip
+      description: "Mandatory waiting period requirements between counseling and abortion care"
+
+  actions:
+    - name: get-all-states
+      httpMethod: GET
+      pattern: read
+      description: "Retrieve policy data for all US states"
+    - name: get-by-state
+      httpMethod: GET
+      pattern: read
+      description: "Retrieve policy data for a specific state"
+    - name: get-by-zip
+      httpMethod: GET
+      pattern: read
+      description: "Retrieve policy data for a specific zip code"
+
+  schemas:
+    core:
+      - name: GestationalLimits
+        description: "Gestational limit policies including exceptions"
+        keyProperties:
+          - banned_after_weeks_since_LMP
+          - exception_life
+          - exception_health
+          - exception_fetal
+          - exception_rape_or_incest
+      - name: InsuranceCoverage
+        description: "Insurance coverage restrictions for Medicaid, private, and ACA plans"
+        keyProperties:
+          - requires_coverage
+          - private_coverage_no_restrictions
+          - exchange_coverage_no_restrictions
+          - exchange_forbids_coverage
+          - medicaid_coverage_provider_patient_decision
+      - name: MinorsRestrictions
+        description: "Restrictions targeting minors including parental requirements"
+        keyProperties:
+          - below_age
+          - parental_consent_required
+          - parental_notification_required
+          - judicial_bypass_available
+          - allows_minor_to_consent
+      - name: WaitingPeriods
+        description: "Waiting period requirements between counseling and abortion care"
+        keyProperties:
+          - waiting_period_hours
+          - counseling_visits
+          - exception_health
+
+  parameters:
+    identifiers:
+      - name: state
+        description: "US state name"
+        type: string
+      - name: zip
+        description: "5-digit US zip code"
+        type: string
+
+  enums:
+    exception-health-types:
+      - Physical
+      - Any
+      - Major Bodily Function
+    fetal-anomaly-types:
+      - Serious fetal anomaly
+      - Lethal fetal anomaly
+    counseling-visits:
+      - 1 (counseling required)
+      - 2 (two clinic visits required)
+
+  authentication:
+    schemes:
+      - name: ApiKeyAuth
+        type: apiKey
+        placement: header
+        headerName: token
+        description: "API key provided upon access request"
+
+capability:
+  workflows:
+    - name: Abortion Policy Lookup
+      file: capabilities/abortion-policy-lookup.yaml
+      description: "Unified workflow for looking up US state abortion policies across all four data tables"
+      apisComposed:
+        - abortion-policy-api
+      toolCount: 12
+      personas:
+        - Healthcare Provider
+        - Patient Advocate
+        - Legal Aid
+        - Chatbot Developer
+
+  personas:
+    - id: healthcare-provider
+      name: Healthcare Provider
+      description: "Medical providers advising patients on state-specific abortion access restrictions"
+      workflows:
+        - Abortion Policy Lookup
+    - id: patient-advocate
+      name: Patient Advocate
+      description: "Advocates helping patients understand abortion access options in their state"
+      workflows:
+        - Abortion Policy Lookup
+    - id: legal-aid
+      name: Legal Aid
+      description: "Legal aid organizations advising clients on state abortion law"
+      workflows:
+        - Abortion Policy Lookup
+    - id: chatbot-developer
+      name: Chatbot Developer
+      description: "Developers building conversational tools that answer abortion policy questions"
+      workflows:
+        - Abortion Policy Lookup
+
+  domains:
+    - name: Abortion Policy
+      description: "US state laws governing abortion access including gestational limits, insurance, minors, and waiting periods"
+      resources:
+        - gestational-limits
+        - insurance-coverage
+        - minors-restrictions
+        - waiting-periods
+      workflows:
+        - Abortion Policy Lookup
+
+  namespaces:
+    - name: abortion-policy-api
+      type: consumed
+      baseUri: https://api.abortionpolicyapi.com/v1
+    - name: abortion-policy-lookup-api
+      type: rest-exposed
+      port: 8080
+    - name: abortion-policy-lookup-mcp
+      type: mcp-exposed
+      port: 9090
+
+  binds:
+    - name: ABORTION_POLICY_API_TOKEN
+      description: "API key for Abortion Policy API authentication"
+      workflows:
+        - Abortion Policy Lookup
+
+crossReference:
+  - resource: gestational-limits
+    operations:
+      - get-gestational-limits-all-states
+      - get-gestational-limits-by-state
+      - get-gestational-limits-by-zip
+    workflows:
+      - Abortion Policy Lookup
+    personas:
+      - Healthcare Provider
+      - Patient Advocate
+      - Legal Aid
+      - Chatbot Developer
+  - resource: insurance-coverage
+    operations:
+      - get-insurance-coverage-all-states
+      - get-insurance-coverage-by-state
+      - get-insurance-coverage-by-zip
+    workflows:
+      - Abortion Policy Lookup
+    personas:
+      - Healthcare Provider
+      - Patient Advocate
+      - Legal Aid
+  - resource: minors-restrictions
+    operations:
+      - get-minors-all-states
+      - get-minors-by-state
+      - get-minors-by-zip
+    workflows:
+      - Abortion Policy Lookup
+    personas:
+      - Healthcare Provider
+      - Legal Aid
+  - resource: waiting-periods
+    operations:
+      - get-waiting-periods-all-states
+      - get-waiting-periods-by-state
+      - get-waiting-periods-by-zip
+    workflows:
+      - Abortion Policy Lookup
+    personas:
+      - Healthcare Provider
+      - Patient Advocate
+      - Chatbot Developer

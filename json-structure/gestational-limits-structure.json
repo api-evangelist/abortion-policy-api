@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/abortion-policy-api/refs/heads/main/json-structure/gestational-limits-structure.json",
+  "name": "GestationalLimits",
+  "description": "Abortion restrictions related to gestational limits (bans after certain weeks of pregnancy) for a US state or territory.",
+  "type": "object",
+  "properties": {
+    "banned_after_weeks_since_LMP": {
+      "type": "int32",
+      "nullable": true,
+      "description": "Weeks since Last Menstrual Period (LMP) after which abortion is banned. Null means no gestational restriction. 99 means viability standard. 28 means third trimester ban. 0 means complete ban.",
+      "example": 24
+    },
+    "exception_life": {
+      "type": "boolean",
+      "description": "If true, abortion is permitted when necessary to save the pregnant person's life.",
+      "example": true
+    },
+    "exception_health": {
+      "type": "string",
+      "nullable": true,
+      "description": "Health exception type. \"Physical\" (excluding mental health), \"Any\" (may include mental health), or \"Major Bodily Function\" (substantial irreversible impairment).",
+      "example": "Any"
+    },
+    "exception_fetal": {
+      "type": "string",
+      "nullable": true,
+      "description": "Fetal anomaly exception type. \"Serious fetal anomaly\" or \"Lethal fetal anomaly\".",
+      "example": "Serious fetal anomaly"
+    },
+    "exception_rape_or_incest": {
+      "type": "boolean",
+      "description": "If true, exceptions may be granted in cases of rape or incest.",
+      "example": true
+    },
+    "Last Updated": {
+      "type": "string",
+      "description": "Date this policy record was last updated.",
+      "example": "2025-01-15"
+    }
+  }
+}
