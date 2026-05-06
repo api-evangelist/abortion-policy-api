@@ -1,282 +1,447 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Abortion Policy Lookup"
-  description: "Unified workflow for looking up US state abortion policies across gestational limits, insurance coverage, minors restrictions, and waiting periods. Designed for healthcare providers, patient advocates, chatbots, and legal aid organizations needing comprehensive state-specific abortion access information."
+  label: Abortion Policy Lookup
+  description: Unified workflow for looking up US state abortion policies across gestational limits, insurance coverage, minors
+    restrictions, and waiting periods. Designed for healthcare providers, patient advocates, chatbots, and legal aid organizations
+    needing comprehensive state-specific abortion access information.
   tags:
-    - Abortion Policy
-    - Healthcare
-    - Government Data
-    - Patient Advocacy
-  created: "2026-04-19"
-  modified: "2026-04-19"
-
+  - Abortion Policy
+  - Healthcare
+  - Government Data
+  - Patient Advocacy
+  created: '2026-04-19'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      ABORTION_POLICY_API_TOKEN: ABORTION_POLICY_API_TOKEN
-
+- namespace: env
+  keys:
+    ABORTION_POLICY_API_TOKEN: ABORTION_POLICY_API_TOKEN
 capability:
   consumes:
-    - import: abortion-policy-api
-      location: ./shared/abortion-policy-api.yaml
-
+  - type: http
+    namespace: abortion-policy-api
+    baseUri: https://api.abortionpolicyapi.com/v1
+    description: Abortion Policy API providing US state abortion law data.
+    authentication:
+      type: apikey
+      key: token
+      value: '{{ABORTION_POLICY_API_TOKEN}}'
+      placement: header
+    resources:
+    - name: gestational-limits
+      path: /gestational_limits
+      description: Gestational limit abortion policies by state or zip code.
+      operations:
+      - name: get-gestational-limits-all-states
+        method: GET
+        description: Get gestational limits for all US states.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-gestational-limits-by-state
+        method: GET
+        description: Get gestational limits for a specific US state.
+        inputParameters:
+        - name: state
+          in: path
+          type: string
+          required: true
+          description: State name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-gestational-limits-by-zip
+        method: GET
+        description: Get gestational limits for a specific zip code.
+        inputParameters:
+        - name: zip
+          in: path
+          type: string
+          required: true
+          description: 5-digit zip code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: insurance-coverage
+      path: /insurance_coverage
+      description: Abortion insurance coverage restrictions by state or zip code.
+      operations:
+      - name: get-insurance-coverage-all-states
+        method: GET
+        description: Get insurance coverage restrictions for all US states.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-insurance-coverage-by-state
+        method: GET
+        description: Get insurance coverage restrictions for a specific US state.
+        inputParameters:
+        - name: state
+          in: path
+          type: string
+          required: true
+          description: State name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-insurance-coverage-by-zip
+        method: GET
+        description: Get insurance coverage restrictions for a specific zip code.
+        inputParameters:
+        - name: zip
+          in: path
+          type: string
+          required: true
+          description: 5-digit zip code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: minors
+      path: /minors
+      description: Abortion restrictions targeting minors by state or zip code.
+      operations:
+      - name: get-minors-all-states
+        method: GET
+        description: Get minors abortion restrictions for all US states.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-minors-by-state
+        method: GET
+        description: Get minors abortion restrictions for a specific US state.
+        inputParameters:
+        - name: state
+          in: path
+          type: string
+          required: true
+          description: State name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-minors-by-zip
+        method: GET
+        description: Get minors abortion restrictions for a specific zip code.
+        inputParameters:
+        - name: zip
+          in: path
+          type: string
+          required: true
+          description: 5-digit zip code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: waiting-periods
+      path: /waiting_periods
+      description: Abortion waiting period restrictions by state or zip code.
+      operations:
+      - name: get-waiting-periods-all-states
+        method: GET
+        description: Get waiting period restrictions for all US states.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-waiting-periods-by-state
+        method: GET
+        description: Get waiting period restrictions for a specific US state.
+        inputParameters:
+        - name: state
+          in: path
+          type: string
+          required: true
+          description: State name
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-waiting-periods-by-zip
+        method: GET
+        description: Get waiting period restrictions for a specific zip code.
+        inputParameters:
+        - name: zip
+          in: path
+          type: string
+          required: true
+          description: 5-digit zip code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: abortion-policy-lookup-api
-      description: "Unified REST API for comprehensive abortion policy lookups by state or zip code."
-      resources:
-        - path: /v1/policies/{state}
-          name: state-policies
-          description: "All abortion policies for a specific state."
-          operations:
-            - method: GET
-              name: get-gestational-limits-by-state
-              description: "Get gestational limit policy for a state."
-              call: "abortion-policy-api.get-gestational-limits-by-state"
-              with:
-                state: "rest.state"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/policies/zip/{zip}
-          name: zip-policies
-          description: "All abortion policies for a specific zip code."
-          operations:
-            - method: GET
-              name: get-gestational-limits-by-zip
-              description: "Get gestational limit policy for a zip code."
-              call: "abortion-policy-api.get-gestational-limits-by-zip"
-              with:
-                zip: "rest.zip"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/gestational-limits/{state}
-          name: gestational-limits-state
-          description: "Gestational limit policy for a state."
-          operations:
-            - method: GET
-              name: get-gestational-limits-by-state
-              description: "Get gestational limits for a state."
-              call: "abortion-policy-api.get-gestational-limits-by-state"
-              with:
-                state: "rest.state"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/insurance-coverage/{state}
-          name: insurance-coverage-state
-          description: "Insurance coverage restrictions for a state."
-          operations:
-            - method: GET
-              name: get-insurance-coverage-by-state
-              description: "Get insurance coverage for a state."
-              call: "abortion-policy-api.get-insurance-coverage-by-state"
-              with:
-                state: "rest.state"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/minors/{state}
-          name: minors-state
-          description: "Minors abortion restrictions for a state."
-          operations:
-            - method: GET
-              name: get-minors-by-state
-              description: "Get minors restrictions for a state."
-              call: "abortion-policy-api.get-minors-by-state"
-              with:
-                state: "rest.state"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/waiting-periods/{state}
-          name: waiting-periods-state
-          description: "Waiting period restrictions for a state."
-          operations:
-            - method: GET
-              name: get-waiting-periods-by-state
-              description: "Get waiting periods for a state."
-              call: "abortion-policy-api.get-waiting-periods-by-state"
-              with:
-                state: "rest.state"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/all-states/gestational-limits
-          name: all-gestational-limits
-          description: "Gestational limit policies for all states."
-          operations:
-            - method: GET
-              name: get-gestational-limits-all-states
-              description: "Get gestational limits for all states."
-              call: "abortion-policy-api.get-gestational-limits-all-states"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/all-states/insurance-coverage
-          name: all-insurance-coverage
-          description: "Insurance coverage restrictions for all states."
-          operations:
-            - method: GET
-              name: get-insurance-coverage-all-states
-              description: "Get insurance coverage for all states."
-              call: "abortion-policy-api.get-insurance-coverage-all-states"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/all-states/minors
-          name: all-minors
-          description: "Minors restrictions for all states."
-          operations:
-            - method: GET
-              name: get-minors-all-states
-              description: "Get minors restrictions for all states."
-              call: "abortion-policy-api.get-minors-all-states"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/all-states/waiting-periods
-          name: all-waiting-periods
-          description: "Waiting period restrictions for all states."
-          operations:
-            - method: GET
-              name: get-waiting-periods-all-states
-              description: "Get waiting periods for all states."
-              call: "abortion-policy-api.get-waiting-periods-all-states"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: abortion-policy-lookup-mcp
-      transport: http
-      description: "MCP server for AI-assisted abortion policy lookups for healthcare and patient advocacy applications."
-      tools:
-        - name: lookup-gestational-limits
-          description: "Look up abortion gestational limit policy for a specific US state or zip code."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-gestational-limits-by-state"
-          with:
-            state: "tools.state"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: lookup-gestational-limits-zip
-          description: "Look up abortion gestational limit policy for a specific zip code."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-gestational-limits-by-zip"
-          with:
-            zip: "tools.zip"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: lookup-insurance-coverage
-          description: "Look up abortion insurance coverage restrictions for a specific US state."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-insurance-coverage-by-state"
-          with:
-            state: "tools.state"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: lookup-insurance-coverage-zip
-          description: "Look up abortion insurance coverage restrictions for a specific zip code."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-insurance-coverage-by-zip"
-          with:
-            zip: "tools.zip"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: lookup-minors-restrictions
-          description: "Look up abortion restrictions for minors in a specific US state."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-minors-by-state"
-          with:
-            state: "tools.state"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: lookup-minors-restrictions-zip
-          description: "Look up abortion restrictions for minors in a specific zip code."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-minors-by-zip"
-          with:
-            zip: "tools.zip"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: lookup-waiting-periods
-          description: "Look up abortion waiting period requirements for a specific US state."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-waiting-periods-by-state"
-          with:
-            state: "tools.state"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: lookup-waiting-periods-zip
-          description: "Look up abortion waiting period requirements for a specific zip code."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-waiting-periods-by-zip"
-          with:
-            zip: "tools.zip"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-all-gestational-limits
-          description: "List abortion gestational limit policies for all US states."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-gestational-limits-all-states"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-all-insurance-coverage
-          description: "List abortion insurance coverage restrictions for all US states."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-insurance-coverage-all-states"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-all-minors-restrictions
-          description: "List abortion restrictions for minors across all US states."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-minors-all-states"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-all-waiting-periods
-          description: "List abortion waiting period restrictions across all US states."
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "abortion-policy-api.get-waiting-periods-all-states"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: abortion-policy-lookup-api
+    description: Unified REST API for comprehensive abortion policy lookups by state or zip code.
+    resources:
+    - path: /v1/policies/{state}
+      name: state-policies
+      description: All abortion policies for a specific state.
+      operations:
+      - method: GET
+        name: get-gestational-limits-by-state
+        description: Get gestational limit policy for a state.
+        call: abortion-policy-api.get-gestational-limits-by-state
+        with:
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/policies/zip/{zip}
+      name: zip-policies
+      description: All abortion policies for a specific zip code.
+      operations:
+      - method: GET
+        name: get-gestational-limits-by-zip
+        description: Get gestational limit policy for a zip code.
+        call: abortion-policy-api.get-gestational-limits-by-zip
+        with:
+          zip: rest.zip
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/gestational-limits/{state}
+      name: gestational-limits-state
+      description: Gestational limit policy for a state.
+      operations:
+      - method: GET
+        name: get-gestational-limits-by-state
+        description: Get gestational limits for a state.
+        call: abortion-policy-api.get-gestational-limits-by-state
+        with:
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/insurance-coverage/{state}
+      name: insurance-coverage-state
+      description: Insurance coverage restrictions for a state.
+      operations:
+      - method: GET
+        name: get-insurance-coverage-by-state
+        description: Get insurance coverage for a state.
+        call: abortion-policy-api.get-insurance-coverage-by-state
+        with:
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/minors/{state}
+      name: minors-state
+      description: Minors abortion restrictions for a state.
+      operations:
+      - method: GET
+        name: get-minors-by-state
+        description: Get minors restrictions for a state.
+        call: abortion-policy-api.get-minors-by-state
+        with:
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/waiting-periods/{state}
+      name: waiting-periods-state
+      description: Waiting period restrictions for a state.
+      operations:
+      - method: GET
+        name: get-waiting-periods-by-state
+        description: Get waiting periods for a state.
+        call: abortion-policy-api.get-waiting-periods-by-state
+        with:
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/all-states/gestational-limits
+      name: all-gestational-limits
+      description: Gestational limit policies for all states.
+      operations:
+      - method: GET
+        name: get-gestational-limits-all-states
+        description: Get gestational limits for all states.
+        call: abortion-policy-api.get-gestational-limits-all-states
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/all-states/insurance-coverage
+      name: all-insurance-coverage
+      description: Insurance coverage restrictions for all states.
+      operations:
+      - method: GET
+        name: get-insurance-coverage-all-states
+        description: Get insurance coverage for all states.
+        call: abortion-policy-api.get-insurance-coverage-all-states
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/all-states/minors
+      name: all-minors
+      description: Minors restrictions for all states.
+      operations:
+      - method: GET
+        name: get-minors-all-states
+        description: Get minors restrictions for all states.
+        call: abortion-policy-api.get-minors-all-states
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/all-states/waiting-periods
+      name: all-waiting-periods
+      description: Waiting period restrictions for all states.
+      operations:
+      - method: GET
+        name: get-waiting-periods-all-states
+        description: Get waiting periods for all states.
+        call: abortion-policy-api.get-waiting-periods-all-states
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: abortion-policy-lookup-mcp
+    transport: http
+    description: MCP server for AI-assisted abortion policy lookups for healthcare and patient advocacy applications.
+    tools:
+    - name: lookup-gestational-limits
+      description: Look up abortion gestational limit policy for a specific US state or zip code.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-gestational-limits-by-state
+      with:
+        state: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lookup-gestational-limits-zip
+      description: Look up abortion gestational limit policy for a specific zip code.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-gestational-limits-by-zip
+      with:
+        zip: tools.zip
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lookup-insurance-coverage
+      description: Look up abortion insurance coverage restrictions for a specific US state.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-insurance-coverage-by-state
+      with:
+        state: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lookup-insurance-coverage-zip
+      description: Look up abortion insurance coverage restrictions for a specific zip code.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-insurance-coverage-by-zip
+      with:
+        zip: tools.zip
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lookup-minors-restrictions
+      description: Look up abortion restrictions for minors in a specific US state.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-minors-by-state
+      with:
+        state: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lookup-minors-restrictions-zip
+      description: Look up abortion restrictions for minors in a specific zip code.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-minors-by-zip
+      with:
+        zip: tools.zip
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lookup-waiting-periods
+      description: Look up abortion waiting period requirements for a specific US state.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-waiting-periods-by-state
+      with:
+        state: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lookup-waiting-periods-zip
+      description: Look up abortion waiting period requirements for a specific zip code.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-waiting-periods-by-zip
+      with:
+        zip: tools.zip
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-gestational-limits
+      description: List abortion gestational limit policies for all US states.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-gestational-limits-all-states
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-insurance-coverage
+      description: List abortion insurance coverage restrictions for all US states.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-insurance-coverage-all-states
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-minors-restrictions
+      description: List abortion restrictions for minors across all US states.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-minors-all-states
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-waiting-periods
+      description: List abortion waiting period restrictions across all US states.
+      hints:
+        readOnly: true
+        openWorld: false
+      call: abortion-policy-api.get-waiting-periods-all-states
+      outputParameters:
+      - type: object
+        mapping: $.
