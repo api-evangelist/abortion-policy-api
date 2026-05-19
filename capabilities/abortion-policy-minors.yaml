@@ -1,0 +1,156 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Abortion Policy API — Minors
+  description: 'Abortion Policy API — Minors. 3 operations. Lead operation: Abortion Policy API Get Minors Restrictions for
+    All States. Self-contained Naftiko capability covering one Abortion Policy Api business surface.'
+  tags:
+  - Abortion Policy Api
+  - Minors
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ABORTION_POLICY_API_API_KEY: ABORTION_POLICY_API_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: abortion-policy-minors
+    baseUri: https://api.abortionpolicyapi.com/v1
+    description: Abortion Policy API — Minors business capability. Self-contained, no shared references.
+    resources:
+    - name: minors-states
+      path: /minors/states
+      operations:
+      - name: getminorsallstates
+        method: GET
+        description: Abortion Policy API Get Minors Restrictions for All States
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: minors-states-state
+      path: /minors/states/{state}
+      operations:
+      - name: getminorsbystate
+        method: GET
+        description: Abortion Policy API Get Minors Restrictions by State
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: state
+          in: path
+          type: string
+          description: The state name (e.g., California, Texas, New York)
+          required: true
+    - name: minors-zips-zip
+      path: /minors/zips/{zip}
+      operations:
+      - name: getminorsbyzip
+        method: GET
+        description: Abortion Policy API Get Minors Restrictions by Zip Code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: zip
+          in: path
+          type: string
+          description: The 5-digit US zip code
+          required: true
+    authentication:
+      type: apikey
+      key: token
+      value: '{{env.ABORTION_POLICY_API_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: abortion-policy-minors-rest
+    port: 8080
+    description: REST adapter for Abortion Policy API — Minors. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/minors/states
+      name: minors-states
+      description: REST surface for minors-states.
+      operations:
+      - method: GET
+        name: getminorsallstates
+        description: Abortion Policy API Get Minors Restrictions for All States
+        call: abortion-policy-minors.getminorsallstates
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/minors/states/{state}
+      name: minors-states-state
+      description: REST surface for minors-states-state.
+      operations:
+      - method: GET
+        name: getminorsbystate
+        description: Abortion Policy API Get Minors Restrictions by State
+        call: abortion-policy-minors.getminorsbystate
+        with:
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/minors/zips/{zip}
+      name: minors-zips-zip
+      description: REST surface for minors-zips-zip.
+      operations:
+      - method: GET
+        name: getminorsbyzip
+        description: Abortion Policy API Get Minors Restrictions by Zip Code
+        call: abortion-policy-minors.getminorsbyzip
+        with:
+          zip: rest.zip
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: abortion-policy-minors-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Abortion Policy API — Minors. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: abortion-policy-api-get-minors
+      description: Abortion Policy API Get Minors Restrictions for All States
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: abortion-policy-minors.getminorsallstates
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: abortion-policy-api-get-minors-2
+      description: Abortion Policy API Get Minors Restrictions by State
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: abortion-policy-minors.getminorsbystate
+      with:
+        state: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: abortion-policy-api-get-minors-3
+      description: Abortion Policy API Get Minors Restrictions by Zip Code
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: abortion-policy-minors.getminorsbyzip
+      with:
+        zip: tools.zip
+      outputParameters:
+      - type: object
+        mapping: $.

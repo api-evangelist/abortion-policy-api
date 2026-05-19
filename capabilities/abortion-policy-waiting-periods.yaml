@@ -1,0 +1,156 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Abortion Policy API — Waiting Periods
+  description: 'Abortion Policy API — Waiting Periods. 3 operations. Lead operation: Abortion Policy API Get Waiting Periods
+    for All States. Self-contained Naftiko capability covering one Abortion Policy Api business surface.'
+  tags:
+  - Abortion Policy Api
+  - Waiting Periods
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ABORTION_POLICY_API_API_KEY: ABORTION_POLICY_API_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: abortion-policy-waiting-periods
+    baseUri: https://api.abortionpolicyapi.com/v1
+    description: Abortion Policy API — Waiting Periods business capability. Self-contained, no shared references.
+    resources:
+    - name: waiting_periods-states
+      path: /waiting_periods/states
+      operations:
+      - name: getwaitingperiodsallstates
+        method: GET
+        description: Abortion Policy API Get Waiting Periods for All States
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: waiting_periods-states-state
+      path: /waiting_periods/states/{state}
+      operations:
+      - name: getwaitingperiodsbystate
+        method: GET
+        description: Abortion Policy API Get Waiting Periods by State
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: state
+          in: path
+          type: string
+          description: The state name (e.g., California, Texas, New York)
+          required: true
+    - name: waiting_periods-zips-zip
+      path: /waiting_periods/zips/{zip}
+      operations:
+      - name: getwaitingperiodsbyzip
+        method: GET
+        description: Abortion Policy API Get Waiting Periods by Zip Code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: zip
+          in: path
+          type: string
+          description: The 5-digit US zip code
+          required: true
+    authentication:
+      type: apikey
+      key: token
+      value: '{{env.ABORTION_POLICY_API_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: abortion-policy-waiting-periods-rest
+    port: 8080
+    description: REST adapter for Abortion Policy API — Waiting Periods. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/waiting-periods/states
+      name: waiting-periods-states
+      description: REST surface for waiting_periods-states.
+      operations:
+      - method: GET
+        name: getwaitingperiodsallstates
+        description: Abortion Policy API Get Waiting Periods for All States
+        call: abortion-policy-waiting-periods.getwaitingperiodsallstates
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/waiting-periods/states/{state}
+      name: waiting-periods-states-state
+      description: REST surface for waiting_periods-states-state.
+      operations:
+      - method: GET
+        name: getwaitingperiodsbystate
+        description: Abortion Policy API Get Waiting Periods by State
+        call: abortion-policy-waiting-periods.getwaitingperiodsbystate
+        with:
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/waiting-periods/zips/{zip}
+      name: waiting-periods-zips-zip
+      description: REST surface for waiting_periods-zips-zip.
+      operations:
+      - method: GET
+        name: getwaitingperiodsbyzip
+        description: Abortion Policy API Get Waiting Periods by Zip Code
+        call: abortion-policy-waiting-periods.getwaitingperiodsbyzip
+        with:
+          zip: rest.zip
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: abortion-policy-waiting-periods-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Abortion Policy API — Waiting Periods. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: abortion-policy-api-get-waiting
+      description: Abortion Policy API Get Waiting Periods for All States
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: abortion-policy-waiting-periods.getwaitingperiodsallstates
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: abortion-policy-api-get-waiting-2
+      description: Abortion Policy API Get Waiting Periods by State
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: abortion-policy-waiting-periods.getwaitingperiodsbystate
+      with:
+        state: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: abortion-policy-api-get-waiting-3
+      description: Abortion Policy API Get Waiting Periods by Zip Code
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: abortion-policy-waiting-periods.getwaitingperiodsbyzip
+      with:
+        zip: tools.zip
+      outputParameters:
+      - type: object
+        mapping: $.

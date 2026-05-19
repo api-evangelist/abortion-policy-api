@@ -1,0 +1,156 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Abortion Policy API — Insurance Coverage
+  description: 'Abortion Policy API — Insurance Coverage. 3 operations. Lead operation: Abortion Policy API Get Insurance
+    Coverage for All States. Self-contained Naftiko capability covering one Abortion Policy Api business surface.'
+  tags:
+  - Abortion Policy Api
+  - Insurance Coverage
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ABORTION_POLICY_API_API_KEY: ABORTION_POLICY_API_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: abortion-policy-insurance-coverage
+    baseUri: https://api.abortionpolicyapi.com/v1
+    description: Abortion Policy API — Insurance Coverage business capability. Self-contained, no shared references.
+    resources:
+    - name: insurance_coverage-states
+      path: /insurance_coverage/states
+      operations:
+      - name: getinsurancecoverageallstates
+        method: GET
+        description: Abortion Policy API Get Insurance Coverage for All States
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: insurance_coverage-states-state
+      path: /insurance_coverage/states/{state}
+      operations:
+      - name: getinsurancecoveragebystate
+        method: GET
+        description: Abortion Policy API Get Insurance Coverage by State
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: state
+          in: path
+          type: string
+          description: The state name (e.g., California, Texas, New York)
+          required: true
+    - name: insurance_coverage-zips-zip
+      path: /insurance_coverage/zips/{zip}
+      operations:
+      - name: getinsurancecoveragebyzip
+        method: GET
+        description: Abortion Policy API Get Insurance Coverage by Zip Code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: zip
+          in: path
+          type: string
+          description: The 5-digit US zip code
+          required: true
+    authentication:
+      type: apikey
+      key: token
+      value: '{{env.ABORTION_POLICY_API_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: abortion-policy-insurance-coverage-rest
+    port: 8080
+    description: REST adapter for Abortion Policy API — Insurance Coverage. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/insurance-coverage/states
+      name: insurance-coverage-states
+      description: REST surface for insurance_coverage-states.
+      operations:
+      - method: GET
+        name: getinsurancecoverageallstates
+        description: Abortion Policy API Get Insurance Coverage for All States
+        call: abortion-policy-insurance-coverage.getinsurancecoverageallstates
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/insurance-coverage/states/{state}
+      name: insurance-coverage-states-state
+      description: REST surface for insurance_coverage-states-state.
+      operations:
+      - method: GET
+        name: getinsurancecoveragebystate
+        description: Abortion Policy API Get Insurance Coverage by State
+        call: abortion-policy-insurance-coverage.getinsurancecoveragebystate
+        with:
+          state: rest.state
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/insurance-coverage/zips/{zip}
+      name: insurance-coverage-zips-zip
+      description: REST surface for insurance_coverage-zips-zip.
+      operations:
+      - method: GET
+        name: getinsurancecoveragebyzip
+        description: Abortion Policy API Get Insurance Coverage by Zip Code
+        call: abortion-policy-insurance-coverage.getinsurancecoveragebyzip
+        with:
+          zip: rest.zip
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: abortion-policy-insurance-coverage-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Abortion Policy API — Insurance Coverage. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: abortion-policy-api-get-insurance
+      description: Abortion Policy API Get Insurance Coverage for All States
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: abortion-policy-insurance-coverage.getinsurancecoverageallstates
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: abortion-policy-api-get-insurance-2
+      description: Abortion Policy API Get Insurance Coverage by State
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: abortion-policy-insurance-coverage.getinsurancecoveragebystate
+      with:
+        state: tools.state
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: abortion-policy-api-get-insurance-3
+      description: Abortion Policy API Get Insurance Coverage by Zip Code
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: abortion-policy-insurance-coverage.getinsurancecoveragebyzip
+      with:
+        zip: tools.zip
+      outputParameters:
+      - type: object
+        mapping: $.
