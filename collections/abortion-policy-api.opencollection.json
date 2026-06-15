@@ -1,0 +1,310 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Abortion Policy API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Gestational Limits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Abortion Policy API Get Gestational Limits for All States",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/gestational_limits/states",
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the restrictions on abortion access related to gestational limits for all US states and territories."
+        },
+        {
+          "info": {
+            "name": "Abortion Policy API Get Gestational Limits by State",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/gestational_limits/states/:state",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "path",
+                "description": "The state name (e.g., California, Texas, New York)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the restrictions on abortion access related to gestational limits for a specific US state."
+        },
+        {
+          "info": {
+            "name": "Abortion Policy API Get Gestational Limits by Zip Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/gestational_limits/zips/:zip",
+            "params": [
+              {
+                "name": "zip",
+                "value": "",
+                "type": "path",
+                "description": "The 5-digit US zip code"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the restrictions on abortion access related to gestational limits for a specific zip code."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Insurance Coverage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Abortion Policy API Get Insurance Coverage for All States",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/insurance_coverage/states",
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns abortion insurance coverage restrictions for all US states, covering Medicaid, private insurance, and ACA exchange plans."
+        },
+        {
+          "info": {
+            "name": "Abortion Policy API Get Insurance Coverage by State",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/insurance_coverage/states/:state",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "path",
+                "description": "The state name (e.g., California, Texas, New York)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns abortion insurance coverage restrictions for a specific US state, covering Medicaid, private insurance, and ACA exchange plans."
+        },
+        {
+          "info": {
+            "name": "Abortion Policy API Get Insurance Coverage by Zip Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/insurance_coverage/zips/:zip",
+            "params": [
+              {
+                "name": "zip",
+                "value": "",
+                "type": "path",
+                "description": "The 5-digit US zip code"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns abortion insurance coverage restrictions for a specific zip code."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Minors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Abortion Policy API Get Minors Restrictions for All States",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/minors/states",
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns abortion restrictions that specifically target minors for all US states."
+        },
+        {
+          "info": {
+            "name": "Abortion Policy API Get Minors Restrictions by State",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/minors/states/:state",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "path",
+                "description": "The state name (e.g., California, Texas, New York)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns abortion restrictions that specifically target minors for a specific US state."
+        },
+        {
+          "info": {
+            "name": "Abortion Policy API Get Minors Restrictions by Zip Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/minors/zips/:zip",
+            "params": [
+              {
+                "name": "zip",
+                "value": "",
+                "type": "path",
+                "description": "The 5-digit US zip code"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns abortion restrictions that specifically target minors for a specific zip code."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Waiting Periods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Abortion Policy API Get Waiting Periods for All States",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/waiting_periods/states",
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns abortion waiting period restrictions for all US states."
+        },
+        {
+          "info": {
+            "name": "Abortion Policy API Get Waiting Periods by State",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/waiting_periods/states/:state",
+            "params": [
+              {
+                "name": "state",
+                "value": "",
+                "type": "path",
+                "description": "The state name (e.g., California, Texas, New York)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns abortion waiting period restrictions for a specific US state."
+        },
+        {
+          "info": {
+            "name": "Abortion Policy API Get Waiting Periods by Zip Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.abortionpolicyapi.com/v1/waiting_periods/zips/:zip",
+            "params": [
+              {
+                "name": "zip",
+                "value": "",
+                "type": "path",
+                "description": "The 5-digit US zip code"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "token",
+              "value": "{{token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns abortion waiting period restrictions for a specific zip code."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
