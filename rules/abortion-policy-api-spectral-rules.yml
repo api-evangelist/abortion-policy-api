@@ -1,6 +1,23 @@
+# abortion-policy-api — Spectral ruleset (strengthened)
+# Plain Spectral. Existing hand-authored rules preserved; measured rules added
+# from this provider's own OpenAPI conventions by strengthen_ruleset.py,
+# then self-validated against the spec.
+#
+# Provenance:
+#   - servers-https-only: 100% of servers already https (error)
+#   - servers-expected-domain: 1/1 servers on abortionpolicyapi.com
+#   - path-params-casing: snake @ 100% (n=8)
+#   - operationid-casing: camel @ 100% (n=12)
+#   - schema-names-casing: pascal @ 100% (n=5)
+#   - schema-properties-casing: snake @ 87% (n=39)
+#   - operation-security-required: 12/12 ops declare per-op security
+#   - error-schema-defined: Error
+#   - operation-documents-401: 100% adherence
+#   - merge: kept 32 existing, added 6 measured, upgraded 0
+#   - added: servers-expected-domain, path-params-casing, schema-names-casing, schema-properties-casing, error-schema-defined, operation-documents-401
+extends:
+  - spectral:oas
 rules:
-
-  # INFO / METADATA
   info-title-required:
     description: API info must have a title.
     severity: error
@@ -8,7 +25,6 @@ rules:
     then:
       field: title
       function: truthy
-
   info-title-format:
     description: API title should follow the "Abortion Policy API ..." naming pattern.
     severity: warn
@@ -16,8 +32,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^Abortion Policy API"
-
+        match: ^Abortion Policy API
   info-description-required:
     description: API info must have a description.
     severity: error
@@ -25,7 +40,6 @@ rules:
     then:
       field: description
       function: truthy
-
   info-version-required:
     description: API info must have a version.
     severity: error
@@ -33,8 +47,6 @@ rules:
     then:
       field: version
       function: truthy
-
-  # OPENAPI VERSION
   openapi-version:
     description: API must use OpenAPI 3.x.
     severity: error
@@ -43,9 +55,7 @@ rules:
       field: openapi
       function: pattern
       functionOptions:
-        match: "^3\\."
-
-  # SERVERS
+        match: ^3\.
   servers-required:
     description: At least one server must be defined.
     severity: error
@@ -53,7 +63,6 @@ rules:
     then:
       field: servers
       function: truthy
-
   server-https-required:
     description: All server URLs must use HTTPS.
     severity: error
@@ -61,8 +70,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^https://"
-
+        match: ^https://
   server-description-required:
     description: Each server should have a description.
     severity: warn
@@ -70,8 +78,6 @@ rules:
     then:
       field: description
       function: truthy
-
-  # PATHS — NAMING CONVENTIONS
   paths-kebab-case:
     description: Path segments should use kebab-case or underscore_case.
     severity: warn
@@ -79,9 +85,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^(/[a-z0-9_-]+(/[a-z0-9_-]+|/\\{[a-zA-Z0-9_]+\\})*)+$"
-
-  # OPERATIONS
+        match: ^(/[a-z0-9_-]+(/[a-z0-9_-]+|/\{[a-zA-Z0-9_]+\})*)+$
   operation-summary-required:
     description: Every operation must have a summary.
     severity: error
@@ -89,7 +93,6 @@ rules:
     then:
       field: summary
       function: truthy
-
   operation-summary-prefix:
     description: Operation summaries should start with "Abortion Policy API".
     severity: warn
@@ -97,8 +100,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^Abortion Policy API"
-
+        match: ^Abortion Policy API
   operation-description-required:
     description: Every operation should have a description.
     severity: warn
@@ -106,7 +108,6 @@ rules:
     then:
       field: description
       function: truthy
-
   operation-operationid-required:
     description: Every operation must have an operationId.
     severity: error
@@ -114,7 +115,6 @@ rules:
     then:
       field: operationId
       function: truthy
-
   operation-operationid-camelcase:
     description: OperationIds must use camelCase.
     severity: warn
@@ -122,8 +122,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^[a-z][a-zA-Z0-9]*$"
-
+        match: ^[a-z][a-zA-Z0-9]*$
   operation-tags-required:
     description: Every operation must have at least one tag.
     severity: error
@@ -131,8 +130,6 @@ rules:
     then:
       field: tags
       function: truthy
-
-  # TAGS
   tags-array-defined:
     description: Global tags array should be defined.
     severity: warn
@@ -140,7 +137,6 @@ rules:
     then:
       field: tags
       function: truthy
-
   tag-description-required:
     description: Each global tag should have a description.
     severity: warn
@@ -148,7 +144,6 @@ rules:
     then:
       field: description
       function: truthy
-
   tag-name-title-case:
     description: Tag names should use Title Case.
     severity: warn
@@ -156,9 +151,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: "^[A-Z][a-zA-Z]*(\\s[A-Z][a-zA-Z]*)*$"
-
-  # PARAMETERS
+        match: ^[A-Z][a-zA-Z]*(\s[A-Z][a-zA-Z]*)*$
   parameter-description-required:
     description: All parameters must have a description.
     severity: error
@@ -166,7 +159,6 @@ rules:
     then:
       field: description
       function: truthy
-
   parameter-schema-required:
     description: All parameters must have a schema.
     severity: error
@@ -174,8 +166,6 @@ rules:
     then:
       field: schema
       function: truthy
-
-  # RESPONSES
   response-success-required:
     description: Every operation must have at least one 2xx response.
     severity: error
@@ -185,10 +175,12 @@ rules:
       functionOptions:
         schema:
           anyOf:
-            - required: ['200']
-            - required: ['201']
-            - required: ['204']
-
+          - required:
+            - '200'
+          - required:
+            - '201'
+          - required:
+            - '204'
   response-401-required:
     description: Every authenticated operation should have a 401 response.
     severity: warn
@@ -197,8 +189,8 @@ rules:
       function: schema
       functionOptions:
         schema:
-          required: ['401']
-
+          required:
+          - '401'
   response-description-required:
     description: All responses must have a description.
     severity: error
@@ -206,8 +198,6 @@ rules:
     then:
       field: description
       function: truthy
-
-  # SCHEMAS — PROPERTY NAMING
   schema-property-description:
     description: Top-level schemas should have descriptions.
     severity: warn
@@ -215,7 +205,6 @@ rules:
     then:
       field: description
       function: truthy
-
   schema-type-defined:
     description: All schemas should have a type defined.
     severity: warn
@@ -223,8 +212,6 @@ rules:
     then:
       field: type
       function: truthy
-
-  # SECURITY
   security-schemes-defined:
     description: Security schemes must be defined in components.
     severity: error
@@ -232,7 +219,6 @@ rules:
     then:
       field: securitySchemes
       function: truthy
-
   security-scheme-description:
     description: Security schemes should have descriptions.
     severity: warn
@@ -240,7 +226,6 @@ rules:
     then:
       field: description
       function: truthy
-
   operation-security-defined:
     description: Every operation should have security defined.
     severity: warn
@@ -248,8 +233,6 @@ rules:
     then:
       field: security
       function: truthy
-
-  # HTTP METHOD CONVENTIONS
   get-no-request-body:
     description: GET operations must not have a request body.
     severity: error
@@ -257,7 +240,6 @@ rules:
     then:
       field: requestBody
       function: falsy
-
   delete-no-request-body:
     description: DELETE operations must not have a request body.
     severity: warn
@@ -265,8 +247,6 @@ rules:
     then:
       field: requestBody
       function: falsy
-
-  # GENERAL QUALITY
   no-empty-descriptions:
     description: Descriptions must not be empty strings.
     severity: error
@@ -274,8 +254,7 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: ".+"
-
+        match: .+
   examples-encouraged:
     description: Operations should have examples for better developer experience.
     severity: info
@@ -285,5 +264,55 @@ rules:
       functionOptions:
         schema:
           anyOf:
-            - required: ['example']
-            - required: ['examples']
+          - required:
+            - example
+          - required:
+            - examples
+  servers-expected-domain:
+    description: Server URLs should be on the abortionpolicyapi.com domain.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: abortionpolicyapi\.com
+  path-params-casing:
+    description: Path parameters should be snake_case (the dominant convention in this API).
+    severity: warn
+    given: $.paths[*].parameters[?(@.in=='path')].name
+    then:
+      function: casing
+      functionOptions:
+        type: snake
+  schema-names-casing:
+    description: Component schema names should be PascalCase (the dominant convention in this API).
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: pascal
+  schema-properties-casing:
+    description: Schema properties should be snake_case (the dominant convention in this API).
+    severity: info
+    given: $.components.schemas[*].properties
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: snake
+  error-schema-defined:
+    description: A shared error schema (Error) should be defined for error payloads.
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: Error
+      function: truthy
+  operation-documents-401:
+    description: Operations should document a 401 response (documented on 100% of this API's operations).
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      field: '401'
+      function: truthy
