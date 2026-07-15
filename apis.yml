@@ -53,6 +53,8 @@ apis:
       Data tables include gestational limits, insurance coverage, minors restrictions, and waiting periods. Access
       requires requesting an API key. Rate limit is 100 calls per 60 seconds.
 common:
+  - type: AgenticAccess
+    url: agentic-access/abortion-policy-api-agentic-access.yml
   - type: DomainSecurity
     url: security/abortion-policy-api-domain-security.yml
   - type: Authentication
