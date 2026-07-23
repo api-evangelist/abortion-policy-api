@@ -1,0 +1,258 @@
+openapi: 3.1.0
+info:
+  title: Abortion Policy Gestational Limits Insurance Coverage API
+  description: 'The Abortion Policy API provides up-to-date information on state abortion policies that can be integrated into online abortion resources. The API consolidates abortion laws into one database across four data tables: gestational limits, insurance coverage, minors restrictions, and waiting periods. Data is accessible by US state name or zip code. Authentication requires an API key provided upon request.'
+  version: 1.0.0
+  contact:
+    url: https://www.abortionpolicyapi.com/contact
+  license:
+    name: API License Agreement
+    url: https://www.abortionpolicyapi.com/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.abortionpolicyapi.com/v1
+  description: Production server
+tags:
+- name: Insurance Coverage
+  description: Endpoints for retrieving abortion insurance coverage restrictions by state or zip code.
+paths:
+  /insurance_coverage/states:
+    get:
+      operationId: getInsuranceCoverageAllStates
+      summary: Abortion Policy API Get Insurance Coverage for All States
+      description: Returns abortion insurance coverage restrictions for all US states, covering Medicaid, private insurance, and ACA exchange plans.
+      tags:
+      - Insurance Coverage
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response with insurance coverage policies for all states
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/InsuranceCoverage'
+              examples:
+                GetInsuranceCoverageAllStates200Example:
+                  summary: Default getInsuranceCoverageAllStates 200 response
+                  x-microcks-default: true
+                  value:
+                    California:
+                      requires_coverage: true
+                      private_coverage_no_restrictions: true
+                      medicaid_coverage_provider_patient_decision: true
+                      medicaid_exception_life: true
+                      Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /insurance_coverage/states/{state}:
+    get:
+      operationId: getInsuranceCoverageByState
+      summary: Abortion Policy API Get Insurance Coverage by State
+      description: Returns abortion insurance coverage restrictions for a specific US state, covering Medicaid, private insurance, and ACA exchange plans.
+      tags:
+      - Insurance Coverage
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: state
+        in: path
+        required: true
+        description: The state name (e.g., California, Texas, New York)
+        schema:
+          type: string
+          example: California
+      responses:
+        '200':
+          description: Successful response with insurance coverage policy for the specified state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsuranceCoverage'
+              examples:
+                GetInsuranceCoverageByState200Example:
+                  summary: Default getInsuranceCoverageByState 200 response
+                  x-microcks-default: true
+                  value:
+                    requires_coverage: true
+                    private_coverage_no_restrictions: true
+                    medicaid_coverage_provider_patient_decision: true
+                    medicaid_exception_life: true
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: State not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /insurance_coverage/zips/{zip}:
+    get:
+      operationId: getInsuranceCoverageByZip
+      summary: Abortion Policy API Get Insurance Coverage by Zip Code
+      description: Returns abortion insurance coverage restrictions for a specific zip code.
+      tags:
+      - Insurance Coverage
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: zip
+        in: path
+        required: true
+        description: The 5-digit US zip code
+        schema:
+          type: string
+          example: '90210'
+      responses:
+        '200':
+          description: Successful response with insurance coverage policy for the specified zip code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InsuranceCoverage'
+              examples:
+                GetInsuranceCoverageByZip200Example:
+                  summary: Default getInsuranceCoverageByZip 200 response
+                  x-microcks-default: true
+                  value:
+                    requires_coverage: true
+                    private_coverage_no_restrictions: true
+                    medicaid_coverage_provider_patient_decision: true
+                    medicaid_exception_life: true
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Zip code not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    InsuranceCoverage:
+      title: InsuranceCoverage
+      description: Abortion insurance coverage restrictions covering Medicaid, private insurance, and ACA exchange plans for a US state.
+      type: object
+      properties:
+        requires_coverage:
+          type: boolean
+          description: If true, state requires private health plans to cover abortion.
+          example: false
+        private_coverage_no_restrictions:
+          type: boolean
+          description: If true, private insurance may cover abortion without restrictions.
+          example: true
+        private_exception_life:
+          type: boolean
+          description: If true, private insurance coverage allowed when abortion is necessary to save pregnant person's life.
+          example: true
+        private_exception_health:
+          type: string
+          nullable: true
+          description: Private insurance coverage allowed for serious health conditions described by this field.
+          example: Major Bodily Function
+        private_exception_fetal:
+          type: string
+          nullable: true
+          description: Private insurance coverage allowed for described fetal anomaly types.
+          example: Lethal fetal anomaly
+        private_exception_rape_or_incest:
+          type: boolean
+          description: If true, private insurance coverage allowed in cases of rape or incest.
+          example: true
+        exchange_coverage_no_restrictions:
+          type: boolean
+          description: If true, state has not restricted abortion coverage in ACA exchange plans.
+          example: true
+        exchange_exception_life:
+          type: boolean
+          description: If true, exchange plan coverage allowed when abortion is necessary to save pregnant person's life.
+          example: true
+        exchange_exception_health:
+          type: string
+          nullable: true
+          description: Exchange plan coverage allowed for health conditions described by this field.
+          example: Physical
+        exchange_exception_fetal:
+          type: string
+          nullable: true
+          description: Exchange plan coverage allowed for described fetal anomaly types.
+          example: Lethal fetal anomaly
+        exchange_exception_rape_or_incest:
+          type: boolean
+          description: If true, exchange plan coverage allowed in cases of rape or incest.
+          example: true
+        exchange_forbids_coverage:
+          type: boolean
+          description: If true, state prohibits all exchange insurance coverage for abortion.
+          example: false
+        medicaid_coverage_provider_patient_decision:
+          type: boolean
+          description: If true, state uses Medicaid funds for medically necessary abortion determined by patient/provider.
+          example: true
+        medicaid_exception_life:
+          type: boolean
+          description: If true, Medicaid covers abortion necessary to save pregnant person's life (required by Hyde Amendment).
+          example: true
+        medicaid_exception_health:
+          type: string
+          nullable: true
+          description: Medicaid coverage for health conditions described by this field.
+          example: Physical
+        medicaid_exception_fetal:
+          type: string
+          nullable: true
+          description: Medicaid coverage for described fetal anomaly types.
+          example: Serious fetal anomaly
+        medicaid_exception_rape_or_incest:
+          type: boolean
+          description: If true, Medicaid covers abortion in cases of rape or incest (required by Hyde Amendment).
+          example: true
+        Last Updated:
+          type: string
+          description: Date this policy record was last updated.
+          example: '2025-01-15'
+    Error:
+      title: Error
+      description: Error response returned when a request fails.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong.
+          example: Unauthorized - invalid API key
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 401
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: API key for authentication. Request access at https://www.abortionpolicyapi.com/request-access

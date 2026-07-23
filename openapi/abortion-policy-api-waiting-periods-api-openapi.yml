@@ -1,0 +1,209 @@
+openapi: 3.1.0
+info:
+  title: Abortion Policy Gestational Limits Waiting Periods API
+  description: 'The Abortion Policy API provides up-to-date information on state abortion policies that can be integrated into online abortion resources. The API consolidates abortion laws into one database across four data tables: gestational limits, insurance coverage, minors restrictions, and waiting periods. Data is accessible by US state name or zip code. Authentication requires an API key provided upon request.'
+  version: 1.0.0
+  contact:
+    url: https://www.abortionpolicyapi.com/contact
+  license:
+    name: API License Agreement
+    url: https://www.abortionpolicyapi.com/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.abortionpolicyapi.com/v1
+  description: Production server
+tags:
+- name: Waiting Periods
+  description: Endpoints for retrieving abortion waiting period restrictions by state or zip code.
+paths:
+  /waiting_periods/states:
+    get:
+      operationId: getWaitingPeriodsAllStates
+      summary: Abortion Policy API Get Waiting Periods for All States
+      description: Returns abortion waiting period restrictions for all US states.
+      tags:
+      - Waiting Periods
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response with waiting period policies for all states
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/WaitingPeriods'
+              examples:
+                GetWaitingPeriodsAllStates200Example:
+                  summary: Default getWaitingPeriodsAllStates 200 response
+                  x-microcks-default: true
+                  value:
+                    California:
+                      waiting_period_hours: null
+                      counseling_visits: null
+                      exception_health: null
+                      waiting_period_notes: No waiting period required.
+                      Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /waiting_periods/states/{state}:
+    get:
+      operationId: getWaitingPeriodsByState
+      summary: Abortion Policy API Get Waiting Periods by State
+      description: Returns abortion waiting period restrictions for a specific US state.
+      tags:
+      - Waiting Periods
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: state
+        in: path
+        required: true
+        description: The state name (e.g., California, Texas, New York)
+        schema:
+          type: string
+          example: California
+      responses:
+        '200':
+          description: Successful response with waiting period policy for the specified state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaitingPeriods'
+              examples:
+                GetWaitingPeriodsByState200Example:
+                  summary: Default getWaitingPeriodsByState 200 response
+                  x-microcks-default: true
+                  value:
+                    waiting_period_hours: null
+                    counseling_visits: null
+                    exception_health: null
+                    waiting_period_notes: No waiting period required.
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: State not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /waiting_periods/zips/{zip}:
+    get:
+      operationId: getWaitingPeriodsByZip
+      summary: Abortion Policy API Get Waiting Periods by Zip Code
+      description: Returns abortion waiting period restrictions for a specific zip code.
+      tags:
+      - Waiting Periods
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: zip
+        in: path
+        required: true
+        description: The 5-digit US zip code
+        schema:
+          type: string
+          example: '90210'
+      responses:
+        '200':
+          description: Successful response with waiting period policy for the specified zip code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaitingPeriods'
+              examples:
+                GetWaitingPeriodsByZip200Example:
+                  summary: Default getWaitingPeriodsByZip 200 response
+                  x-microcks-default: true
+                  value:
+                    waiting_period_hours: null
+                    counseling_visits: null
+                    exception_health: null
+                    waiting_period_notes: No waiting period required.
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Zip code not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Error:
+      title: Error
+      description: Error response returned when a request fails.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong.
+          example: Unauthorized - invalid API key
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 401
+    WaitingPeriods:
+      title: WaitingPeriods
+      description: Abortion waiting period restrictions in a US state, covering mandatory time between counseling and abortion care.
+      type: object
+      properties:
+        waiting_period_hours:
+          type: integer
+          nullable: true
+          description: Hours a person must wait between receiving state-mandated counseling and obtaining abortion. Null means no waiting period.
+          example: 24
+        counseling_visits:
+          type: integer
+          nullable: true
+          description: 1=counseling required by state; 2=counseling must be at the facility, requiring two clinic trips.
+          example: 1
+        exception_health:
+          type: string
+          nullable: true
+          description: Conditions under which waiting period may be waived.
+          example: Medical emergency
+        waiting_period_notes:
+          type: string
+          nullable: true
+          description: Additional notes on unusual waiting period policies.
+          example: Waiting period waived in medical emergencies.
+        counseling_waived_condition:
+          type: string
+          nullable: true
+          description: Conditions under which counseling requirement can be waived.
+          example: Medical emergency
+        Last Updated:
+          type: string
+          description: Date this policy record was last updated.
+          example: '2025-01-15'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: API key for authentication. Request access at https://www.abortionpolicyapi.com/request-access

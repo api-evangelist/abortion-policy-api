@@ -1,0 +1,210 @@
+openapi: 3.1.0
+info:
+  title: Abortion Policy Gestational Limits API
+  description: 'The Abortion Policy API provides up-to-date information on state abortion policies that can be integrated into online abortion resources. The API consolidates abortion laws into one database across four data tables: gestational limits, insurance coverage, minors restrictions, and waiting periods. Data is accessible by US state name or zip code. Authentication requires an API key provided upon request.'
+  version: 1.0.0
+  contact:
+    url: https://www.abortionpolicyapi.com/contact
+  license:
+    name: API License Agreement
+    url: https://www.abortionpolicyapi.com/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.abortionpolicyapi.com/v1
+  description: Production server
+tags:
+- name: Gestational Limits
+  description: Endpoints for retrieving gestational limit abortion policies by state or zip code.
+paths:
+  /gestational_limits/states:
+    get:
+      operationId: getGestationalLimitsAllStates
+      summary: Abortion Policy API Get Gestational Limits for All States
+      description: Returns the restrictions on abortion access related to gestational limits for all US states and territories.
+      tags:
+      - Gestational Limits
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response with gestational limit policies for all states
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/GestationalLimits'
+              examples:
+                GetGestationalLimitsAllStates200Example:
+                  summary: Default getGestationalLimitsAllStates 200 response
+                  x-microcks-default: true
+                  value:
+                    California:
+                      banned_after_weeks_since_LMP: null
+                      exception_life: true
+                      exception_health: Any
+                      exception_fetal: Serious fetal anomaly
+                      exception_rape_or_incest: true
+                      Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /gestational_limits/states/{state}:
+    get:
+      operationId: getGestationalLimitsByState
+      summary: Abortion Policy API Get Gestational Limits by State
+      description: Returns the restrictions on abortion access related to gestational limits for a specific US state.
+      tags:
+      - Gestational Limits
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: state
+        in: path
+        required: true
+        description: The state name (e.g., California, Texas, New York)
+        schema:
+          type: string
+          example: California
+      responses:
+        '200':
+          description: Successful response with gestational limit policy for the specified state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GestationalLimits'
+              examples:
+                GetGestationalLimitsByState200Example:
+                  summary: Default getGestationalLimitsByState 200 response
+                  x-microcks-default: true
+                  value:
+                    banned_after_weeks_since_LMP: null
+                    exception_life: true
+                    exception_health: Any
+                    exception_fetal: Serious fetal anomaly
+                    exception_rape_or_incest: true
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: State not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /gestational_limits/zips/{zip}:
+    get:
+      operationId: getGestationalLimitsByZip
+      summary: Abortion Policy API Get Gestational Limits by Zip Code
+      description: Returns the restrictions on abortion access related to gestational limits for a specific zip code.
+      tags:
+      - Gestational Limits
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: zip
+        in: path
+        required: true
+        description: The 5-digit US zip code
+        schema:
+          type: string
+          example: '90210'
+      responses:
+        '200':
+          description: Successful response with gestational limit policy for the specified zip code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GestationalLimits'
+              examples:
+                GetGestationalLimitsByZip200Example:
+                  summary: Default getGestationalLimitsByZip 200 response
+                  x-microcks-default: true
+                  value:
+                    banned_after_weeks_since_LMP: null
+                    exception_life: true
+                    exception_health: Any
+                    exception_fetal: Serious fetal anomaly
+                    exception_rape_or_incest: true
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Zip code not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Error:
+      title: Error
+      description: Error response returned when a request fails.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong.
+          example: Unauthorized - invalid API key
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 401
+    GestationalLimits:
+      title: GestationalLimits
+      description: Abortion restrictions related to gestational limits (bans after certain weeks of pregnancy) for a US state or territory.
+      type: object
+      properties:
+        banned_after_weeks_since_LMP:
+          type: integer
+          nullable: true
+          description: Weeks since Last Menstrual Period (LMP) after which abortion is banned. Null means no gestational restriction. 99 means viability standard. 28 means third trimester ban. 0 means complete ban.
+          example: 24
+        exception_life:
+          type: boolean
+          description: If true, abortion is permitted when necessary to save the pregnant person's life.
+          example: true
+        exception_health:
+          type: string
+          nullable: true
+          description: Health exception type. "Physical" (excluding mental health), "Any" (may include mental health), or "Major Bodily Function" (substantial irreversible impairment).
+          example: Any
+        exception_fetal:
+          type: string
+          nullable: true
+          description: Fetal anomaly exception type. "Serious fetal anomaly" or "Lethal fetal anomaly".
+          example: Serious fetal anomaly
+        exception_rape_or_incest:
+          type: boolean
+          description: If true, exceptions may be granted in cases of rape or incest.
+          example: true
+        Last Updated:
+          type: string
+          description: Date this policy record was last updated.
+          example: '2025-01-15'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: API key for authentication. Request access at https://www.abortionpolicyapi.com/request-access

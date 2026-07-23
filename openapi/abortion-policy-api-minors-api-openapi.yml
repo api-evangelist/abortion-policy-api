@@ -1,0 +1,213 @@
+openapi: 3.1.0
+info:
+  title: Abortion Policy Gestational Limits Minors API
+  description: 'The Abortion Policy API provides up-to-date information on state abortion policies that can be integrated into online abortion resources. The API consolidates abortion laws into one database across four data tables: gestational limits, insurance coverage, minors restrictions, and waiting periods. Data is accessible by US state name or zip code. Authentication requires an API key provided upon request.'
+  version: 1.0.0
+  contact:
+    url: https://www.abortionpolicyapi.com/contact
+  license:
+    name: API License Agreement
+    url: https://www.abortionpolicyapi.com/terms
+  x-generated-from: documentation
+servers:
+- url: https://api.abortionpolicyapi.com/v1
+  description: Production server
+tags:
+- name: Minors
+  description: Endpoints for retrieving abortion restrictions targeting minors by state or zip code.
+paths:
+  /minors/states:
+    get:
+      operationId: getMinorsAllStates
+      summary: Abortion Policy API Get Minors Restrictions for All States
+      description: Returns abortion restrictions that specifically target minors for all US states.
+      tags:
+      - Minors
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response with minors restriction policies for all states
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/MinorsRestrictions'
+              examples:
+                GetMinorsAllStates200Example:
+                  summary: Default getMinorsAllStates 200 response
+                  x-microcks-default: true
+                  value:
+                    California:
+                      below_age: 18
+                      parental_consent_required: false
+                      parental_notification_required: false
+                      allows_minor_to_consent: true
+                      judicial_bypass_available: false
+                      Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /minors/states/{state}:
+    get:
+      operationId: getMinorsByState
+      summary: Abortion Policy API Get Minors Restrictions by State
+      description: Returns abortion restrictions that specifically target minors for a specific US state.
+      tags:
+      - Minors
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: state
+        in: path
+        required: true
+        description: The state name (e.g., California, Texas, New York)
+        schema:
+          type: string
+          example: California
+      responses:
+        '200':
+          description: Successful response with minors restriction policy for the specified state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MinorsRestrictions'
+              examples:
+                GetMinorsByState200Example:
+                  summary: Default getMinorsByState 200 response
+                  x-microcks-default: true
+                  value:
+                    below_age: 18
+                    parental_consent_required: false
+                    parental_notification_required: false
+                    allows_minor_to_consent: true
+                    judicial_bypass_available: false
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: State not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /minors/zips/{zip}:
+    get:
+      operationId: getMinorsByZip
+      summary: Abortion Policy API Get Minors Restrictions by Zip Code
+      description: Returns abortion restrictions that specifically target minors for a specific zip code.
+      tags:
+      - Minors
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: zip
+        in: path
+        required: true
+        description: The 5-digit US zip code
+        schema:
+          type: string
+          example: '90210'
+      responses:
+        '200':
+          description: Successful response with minors restriction policy for the specified zip code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MinorsRestrictions'
+              examples:
+                GetMinorsByZip200Example:
+                  summary: Default getMinorsByZip 200 response
+                  x-microcks-default: true
+                  value:
+                    below_age: 18
+                    parental_consent_required: false
+                    parental_notification_required: false
+                    allows_minor_to_consent: true
+                    judicial_bypass_available: false
+                    Last Updated: '2025-01-15'
+        '401':
+          description: Unauthorized - invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Zip code not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    MinorsRestrictions:
+      title: MinorsRestrictions
+      description: Abortion restrictions that specifically target minors in a US state.
+      type: object
+      properties:
+        below_age:
+          type: integer
+          nullable: true
+          description: Age below which restrictions apply. Null means no restrictions currently enforced.
+          example: 18
+        parents_required:
+          type: integer
+          nullable: true
+          description: Number of parents required to be notified. 1=one parent, 2=both parents, null=no restrictions.
+          example: 1
+        parental_consent_required:
+          type: boolean
+          description: If true, parent(s) must give permission for the minor to have an abortion.
+          example: false
+        parental_notification_required:
+          type: boolean
+          description: If true, parent(s) must be told beforehand of the minor's decision.
+          example: false
+        judicial_bypass_available:
+          type: boolean
+          description: If true, a judge can excuse a minor from parental consent/notification requirements.
+          example: false
+        allows_minor_to_consent:
+          type: boolean
+          description: If true, state explicitly or implicitly allows a minor to consent to abortion.
+          example: true
+        Last Updated:
+          type: string
+          description: Date this policy record was last updated.
+          example: '2025-01-15'
+    Error:
+      title: Error
+      description: Error response returned when a request fails.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong.
+          example: Unauthorized - invalid API key
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 401
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: token
+      description: API key for authentication. Request access at https://www.abortionpolicyapi.com/request-access
