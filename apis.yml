@@ -2,7 +2,20 @@ aid: abortion-policy-api
 url: https://raw.githubusercontent.com/api-evangelist/abortion-policy-api/refs/heads/main/apis.yml
 name: Abortion Policy API
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/abortion-policy-api.png
 tags:
   - Abortion
   - Policies
@@ -17,41 +30,106 @@ created: '2025-01-07'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: abortion-policy-api:abortion-policy-api
-    name: Abortion Policy API
-    tags:
-      - Abortion
-      - Policies
-      - Healthcare
-    humanURL: https://www.abortionpolicyapi.com/
-    properties:
-      - type: Documentation
-        url: https://www.abortionpolicyapi.com/
-      - type: Authentication
-        url: https://www.abortionpolicyapi.com/request-access
-      - type: APIReference
-        url: https://www.abortionpolicyapi.com/field-references
-      - type: OpenAPI
-        url: openapi/abortion-policy-api-openapi.yml
-      - type: CodeExamples
-        url: https://github.com/alexanian/abortion-policy-api-examples
-        title: Python/JavaScript Examples
-      - type: JSONSchema
-        url: json-schema/gestational-limits-schema.json
-        title: Gestational Limits Schema
-      - type: JSONSchema
-        url: json-schema/insurance-coverage-schema.json
-        title: Insurance Coverage Schema
-      - type: JSONSchema
-        url: json-schema/minors-restrictions-schema.json
-        title: Minors Restrictions Schema
-      - type: JSONSchema
-        url: json-schema/waiting-periods-schema.json
-        title: Waiting Periods Schema
-    description: >-
-      The Abortion Policy API consolidates US state abortion laws into one database for third-party developers to use.
-      Data tables include gestational limits, insurance coverage, minors restrictions, and waiting periods. Access
-      requires requesting an API key. Rate limit is 100 calls per 60 seconds.
+- aid: abortion-policy-api:abortion-policy-api-gestational-limits-api
+  name: Abortion Policy API Gestational Limits API
+  description: Endpoints for retrieving gestational limit abortion policies by state or zip code.
+  humanURL: https://www.abortionpolicyapi.com/
+  tags:
+  - Gestational Limits
+  properties:
+  - type: OpenAPI
+    url: openapi/abortion-policy-api-gestational-limits-api-openapi.yml
+  - type: Documentation
+    url: https://www.abortionpolicyapi.com/
+  - type: Authentication
+    url: https://www.abortionpolicyapi.com/request-access
+  - type: APIReference
+    url: https://www.abortionpolicyapi.com/field-references
+  - type: CodeExamples
+    url: https://github.com/alexanian/abortion-policy-api-examples
+  - type: JSONSchema
+    url: json-schema/gestational-limits-schema.json
+  - type: JSONSchema
+    url: json-schema/insurance-coverage-schema.json
+  - type: JSONSchema
+    url: json-schema/minors-restrictions-schema.json
+  - type: JSONSchema
+    url: json-schema/waiting-periods-schema.json
+- aid: abortion-policy-api:abortion-policy-api-insurance-coverage-api
+  name: Abortion Policy API Insurance Coverage API
+  description: Endpoints for retrieving abortion insurance coverage restrictions by state or zip code.
+  humanURL: https://www.abortionpolicyapi.com/
+  tags:
+  - Insurance Coverage
+  properties:
+  - type: OpenAPI
+    url: openapi/abortion-policy-api-insurance-coverage-api-openapi.yml
+  - type: Documentation
+    url: https://www.abortionpolicyapi.com/
+  - type: Authentication
+    url: https://www.abortionpolicyapi.com/request-access
+  - type: APIReference
+    url: https://www.abortionpolicyapi.com/field-references
+  - type: CodeExamples
+    url: https://github.com/alexanian/abortion-policy-api-examples
+  - type: JSONSchema
+    url: json-schema/gestational-limits-schema.json
+  - type: JSONSchema
+    url: json-schema/insurance-coverage-schema.json
+  - type: JSONSchema
+    url: json-schema/minors-restrictions-schema.json
+  - type: JSONSchema
+    url: json-schema/waiting-periods-schema.json
+- aid: abortion-policy-api:abortion-policy-api-minors-api
+  name: Abortion Policy API Minors API
+  description: Endpoints for retrieving abortion restrictions targeting minors by state or zip code.
+  humanURL: https://www.abortionpolicyapi.com/
+  tags:
+  - Minors
+  properties:
+  - type: OpenAPI
+    url: openapi/abortion-policy-api-minors-api-openapi.yml
+  - type: Documentation
+    url: https://www.abortionpolicyapi.com/
+  - type: Authentication
+    url: https://www.abortionpolicyapi.com/request-access
+  - type: APIReference
+    url: https://www.abortionpolicyapi.com/field-references
+  - type: CodeExamples
+    url: https://github.com/alexanian/abortion-policy-api-examples
+  - type: JSONSchema
+    url: json-schema/gestational-limits-schema.json
+  - type: JSONSchema
+    url: json-schema/insurance-coverage-schema.json
+  - type: JSONSchema
+    url: json-schema/minors-restrictions-schema.json
+  - type: JSONSchema
+    url: json-schema/waiting-periods-schema.json
+- aid: abortion-policy-api:abortion-policy-api-waiting-periods-api
+  name: Abortion Policy API Waiting Periods API
+  description: Endpoints for retrieving abortion waiting period restrictions by state or zip code.
+  humanURL: https://www.abortionpolicyapi.com/
+  tags:
+  - Waiting Periods
+  properties:
+  - type: OpenAPI
+    url: openapi/abortion-policy-api-waiting-periods-api-openapi.yml
+  - type: Documentation
+    url: https://www.abortionpolicyapi.com/
+  - type: Authentication
+    url: https://www.abortionpolicyapi.com/request-access
+  - type: APIReference
+    url: https://www.abortionpolicyapi.com/field-references
+  - type: CodeExamples
+    url: https://github.com/alexanian/abortion-policy-api-examples
+  - type: JSONSchema
+    url: json-schema/gestational-limits-schema.json
+  - type: JSONSchema
+    url: json-schema/insurance-coverage-schema.json
+  - type: JSONSchema
+    url: json-schema/minors-restrictions-schema.json
+  - type: JSONSchema
+    url: json-schema/waiting-periods-schema.json
 common:
   - type: AgenticAccess
     url: agentic-access/abortion-policy-api-agentic-access.yml
