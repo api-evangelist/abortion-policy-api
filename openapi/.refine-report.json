@@ -1,0 +1,20 @@
+{
+  "provider": "abortion-policy-api",
+  "sources": [
+    "abortion-policy-api-gestational-limits-api-openapi.yml",
+    "abortion-policy-api-insurance-coverage-api-openapi.yml",
+    "abortion-policy-api-minors-api-openapi.yml",
+    "abortion-policy-api-waiting-periods-api-openapi.yml"
+  ],
+  "outputs": [
+    "abortion-policy-api-gestational-limits-api-openapi.yml",
+    "abortion-policy-api-insurance-coverage-api-openapi.yml",
+    "abortion-policy-api-minors-api-openapi.yml",
+    "abortion-policy-api-waiting-periods-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
