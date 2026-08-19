@@ -28,7 +28,7 @@ description: >-
   or zip code. The project is co-led by Patient Forward and is fiscally sponsored by NEO Philanthropy.
 created: '2025-01-07'
 modified: '2026-05-19'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: abortion-policy-api:abortion-policy-api-gestational-limits-api
   name: Abortion Policy API Gestational Limits API
