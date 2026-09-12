@@ -144,6 +144,8 @@ apis:
   - type: JSONSchema
     url: json-schema/waiting-periods-schema.json
 common:
+  - type: Website
+    url: https://www.abortionpolicyapi.com/
   - type: AgenticAccess
     url: agentic-access/abortion-policy-api-agentic-access.yml
   - type: DomainSecurity
