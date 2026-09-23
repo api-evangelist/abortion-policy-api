@@ -1,10 +1,7 @@
 {
   "provider": "abortion-policy-api",
   "sources": [
-    "abortion-policy-api-gestational-limits-api-openapi.yml",
-    "abortion-policy-api-insurance-coverage-api-openapi.yml",
-    "abortion-policy-api-minors-api-openapi.yml",
-    "abortion-policy-api-waiting-periods-api-openapi.yml"
+    "_ae-authored/abortion-policy-api-openapi.yml"
   ],
   "outputs": [
     "abortion-policy-api-gestational-limits-api-openapi.yml",
@@ -16,7 +13,14 @@
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "abortion-policy-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "abortion-policy-api-gestational-limits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "abortion-policy-api-insurance-coverage-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "abortion-policy-api-minors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "abortion-policy-api-waiting-periods-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

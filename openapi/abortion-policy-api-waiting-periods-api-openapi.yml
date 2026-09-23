@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Abortion Policy Gestational Limits Waiting Periods API
+  title: Abortion Policy Waiting Periods API
   description: 'The Abortion Policy API provides up-to-date information on state abortion policies that can be integrated into online abortion resources. The API consolidates abortion laws into one database across four data tables: gestational limits, insurance coverage, minors restrictions, and waiting periods. Data is accessible by US state name or zip code. Authentication requires an API key provided upon request.'
   version: 1.0.0
   contact:
@@ -154,19 +154,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Error:
-      title: Error
-      description: Error response returned when a request fails.
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message describing what went wrong.
-          example: Unauthorized - invalid API key
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 401
     WaitingPeriods:
       title: WaitingPeriods
       description: Abortion waiting period restrictions in a US state, covering mandatory time between counseling and abortion care.
@@ -201,6 +188,19 @@ components:
           type: string
           description: Date this policy record was last updated.
           example: '2025-01-15'
+    Error:
+      title: Error
+      description: Error response returned when a request fails.
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing what went wrong.
+          example: Unauthorized - invalid API key
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 401
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
