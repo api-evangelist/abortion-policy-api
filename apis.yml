@@ -144,6 +144,10 @@ apis:
   - type: JSONSchema
     url: json-schema/waiting-periods-schema.json
 common:
+  - type: Plans
+    url: plans/abortion-policy-api-plans-pricing.yml
+  - type: FinOps
+    url: finops/abortion-policy-api-finops.yml
   - type: Website
     url: https://www.abortionpolicyapi.com/
   - type: AgenticAccess
