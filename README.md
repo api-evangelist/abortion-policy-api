@@ -1,4 +1,4 @@
-# Abortion Policy API (abortion-policy-api)
+# Abortion Policy API
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,70 +66,170 @@
 
 The Abortion Policy API provides up-to-date information on US state abortion policies that can be integrated into online abortion resources. The API consolidates abortion laws into one database across four data tables covering gestational limits, insurance coverage, minors restrictions, and waiting periods. Data is accessible by US state name or zip code. The project is co-led by Patient Forward and is fiscally sponsored by NEO Philanthropy.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/abortion-policy-api/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/abortion-policy-api/refs/heads/main/apis.yml)
+**Areas:** Abortion · Policies · Healthcare · Government
 
-## Scope
+## Abortion Policy API on APIs.io
 
-- **Type:** Index
+Everything profiled for Abortion Policy API is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/abortion-policy-api/](https://apis.io/providers/abortion-policy-api/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (4)
 
-- Abortion
-- Policies
-- Healthcare
-- Government
+- [Abortion Policy API Gestational Limits API](https://apis.io/apis/abortion-policy-api/abortion-policy-api-gestational-limits-api/) — Endpoints for retrieving gestational limit abortion policies by state or zip code.
+- [Abortion Policy API Insurance Coverage API](https://apis.io/apis/abortion-policy-api/abortion-policy-api-insurance-coverage-api/) — Endpoints for retrieving abortion insurance coverage restrictions by state or zip code.
+- [Abortion Policy API Minors API](https://apis.io/apis/abortion-policy-api/abortion-policy-api-minors-api/) — Endpoints for retrieving abortion restrictions targeting minors by state or zip code.
+- [Abortion Policy API Waiting Periods API](https://apis.io/apis/abortion-policy-api/abortion-policy-api-waiting-periods-api/) — Endpoints for retrieving abortion waiting period restrictions by state or zip code.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-01-07
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Abortion Policy API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The Abortion Policy API consolidates US state abortion laws into one database for third-party developers to use. Data tables include gestational limits, insurance coverage, minors restrictions, and waiting periods. Access requires requesting an API key. Rate limit is 100 calls per 60 seconds.
+- [Abortion Policy Api Agentic Access](https://apis.io/agentic-access/abortion-policy-api/abortion-policy-api-agentic-access/)
 
-- **Human URL:** [https://www.abortionpolicyapi.com/](https://www.abortionpolicyapi.com/)
+#### JSON Schema (4)
 
-#### Tags
+The data models the API reads and writes.
 
-- Abortion
-- Policies
-- Healthcare
+- [GestationalLimits](https://apis.io/schemas/abortion-policy-api/gestational-limits/)
+- [InsuranceCoverage](https://apis.io/schemas/abortion-policy-api/insurance-coverage/)
+- [MinorsRestrictions](https://apis.io/schemas/abortion-policy-api/minors-restrictions/)
+- [WaitingPeriods](https://apis.io/schemas/abortion-policy-api/waiting-periods/)
 
-#### Properties
+#### JSON Structure (4)
 
-- [Documentation](https://www.abortionpolicyapi.com/)
-- [Authentication](https://www.abortionpolicyapi.com/request-access)
-- [API Reference](https://www.abortionpolicyapi.com/field-references)
-- [OpenAPI](openapi/abortion-policy-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/abortion-policy-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/abortion-policy-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Code Examples](https://github.com/alexanian/abortion-policy-api-examples)
-- [JSON Schema](json-schema/gestational-limits-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/insurance-coverage-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/minors-restrictions-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/waiting-periods-schema.json) — [JSON Schema](https://json-schema.org/specification)
+Data models expressed in JSON Structure.
 
-## Common Properties
+- [Gestational Limits Structure](https://apis.io/json-structure/abortion-policy-api/gestational-limits-structure/)
+- [Insurance Coverage Structure](https://apis.io/json-structure/abortion-policy-api/insurance-coverage-structure/)
+- [Minors Restrictions Structure](https://apis.io/json-structure/abortion-policy-api/minors-restrictions-structure/)
+- [Waiting Periods Structure](https://apis.io/json-structure/abortion-policy-api/waiting-periods-structure/)
 
-- [Getting Started](https://www.abortionpolicyapi.com/)
-- [Authentication](https://www.abortionpolicyapi.com/request-access)
-- [API Reference](https://www.abortionpolicyapi.com/field-references)
-- [Case Studies](https://www.abortionpolicyapi.com/case-studies)
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Abortion Policy Api Context](https://apis.io/jsonld/abortion-policy-api/abortion-policy-api-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Abortion Policy Api Vocabulary](https://apis.io/vocabularies/abortion-policy-api/abortion-policy-api-vocabulary/)
+
+#### Examples (4)
+
+Example requests and responses.
+
+- [Gestational Limits Example](https://apis.io/examples/abortion-policy-api/gestational-limits-example/)
+- [Insurance Coverage Example](https://apis.io/examples/abortion-policy-api/insurance-coverage-example/)
+- [Minors Restrictions Example](https://apis.io/examples/abortion-policy-api/minors-restrictions-example/)
+- [Waiting Periods Example](https://apis.io/examples/abortion-policy-api/waiting-periods-example/)
+
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [Abortion Policy API](https://apis.io/collections/abortion-policy-api/open-abortion-policy-api/)
+- [Abortion Policy Gestational Limits API](https://apis.io/collections/abortion-policy-api/open-abortion-policy-api-gestational-limits-api/)
+- [Abortion Policy Gestational Limits Insurance Coverage API](https://apis.io/collections/abortion-policy-api/open-abortion-policy-api-insurance-coverage-api/)
+- [Abortion Policy Gestational Limits Minors API](https://apis.io/collections/abortion-policy-api/open-abortion-policy-api-minors-api/)
+- [Abortion Policy Gestational Limits Waiting Periods API](https://apis.io/collections/abortion-policy-api/open-abortion-policy-api-waiting-periods-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Abortion Policy API — jsonschema rules](https://apis.io/rules/abortion-policy-api/abortion-policy-api-jsonschema-spectral-rules/)
+- [Abortion Policy API API Rules](https://apis.io/rules/abortion-policy-api/abortion-policy-api-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Abortion Policy Api Authentication](https://apis.io/security/abortion-policy-api/abortion-policy-api-authentication/)
+- [Abortion Policy Api Domain Security](https://apis.io/security/abortion-policy-api/abortion-policy-api-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Abortion Policy Api Plans Pricing](https://apis.io/plans/abortion-policy-api/abortion-policy-api-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Abortion Policy Api Rate Limits](https://apis.io/rate-limits/abortion-policy-api/abortion-policy-api-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Abortion Policy Api Finops](https://apis.io/finops/abortion-policy-api/abortion-policy-api-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.abortionpolicyapi.com/)
+- [Getting started](https://www.abortionpolicyapi.com/)
+- [API reference](https://www.abortionpolicyapi.com/field-references)
 - [Support](https://www.abortionpolicyapi.com/contact)
-- [Terms of Service](https://www.abortionpolicyapi.com/terms)
-- [Privacy Policy](https://www.abortionpolicyapi.com/privacy)
-- [Rate Limits](undefined)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [Integrations](undefined)
-- [Spectral Rules](rules/abortion-policy-api-spectral-rules.yml)
-- [Vocabulary](vocabulary/abortion-policy-api-vocabulary.yaml)
-- [JSON-LD](json-ld/abortion-policy-api-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Terms of service](https://www.abortionpolicyapi.com/terms)
+- [Privacy policy](https://www.abortionpolicyapi.com/privacy)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 32.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 53.6 |
+| Contract quality | 29.3 |
+| Contract governance | 27.3 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 45.2 |
+| Access clarity | 28.9 |
+
+**Agent readiness 35.4** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 19.5** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/abortion-policy-api/](https://apis.io/providers/abortion-policy-api/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Abortion Policy API: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/abortion-policy-api/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
