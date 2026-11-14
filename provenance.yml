@@ -5,9 +5,18 @@ artifacts:
   agentic-access/abortion-policy-api-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/abortion-policy-api-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   authentication/abortion-policy-api-authentication.yml:
     method: derived
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   collections/abortion-policy-api-gestational-limits-api.opencollection.json:
     method: derived
     evidence: openapi/abortion-policy-api-gestational-limits-api
@@ -38,6 +47,12 @@ artifacts:
   collections/abortion-policy-api.postman_collection.json:
     method: derived
     evidence: openapi/abortion-policy-api
+  data-license/abortion-policy-api-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
+  eligibility/abortion-policy-api-eligibility.yml:
+    method: harvested
+    evidence: declared in the artifact
   examples/gestational-limits-example.json:
     method: unknown
     evidence: no authorship recorded
@@ -92,7 +107,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -161,6 +176,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   openapi/abortion-policy-api-gestational-limits-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
@@ -176,6 +194,9 @@ artifacts:
   plans/abortion-policy-api-plans-pricing.yml:
     method: generated
     evidence: declared in the artifact
+  privacy/abortion-policy-api-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/abortion-policy-api-rate-limits.yml:
     method: generated
     evidence: declared in the artifact
@@ -190,6 +211,9 @@ artifacts:
     evidence: no authorship recorded
   sla/abortion-policy-api-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/abortion-policy-api-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   vocabulary/abortion-policy-api-vocabulary.yaml:
     method: unknown
