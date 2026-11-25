@@ -87,7 +87,7 @@ Each property below is a page on APIs.io carrying the machine-readable artifact 
 
 Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Abortion Policy Api Agentic Access](https://apis.io/agentic-access/abortion-policy-api/abortion-policy-api-agentic-access/)
+- [Abortion Policy API Agentic Access](https://apis.io/agentic-access/abortion-policy-api/abortion-policy-api-agentic-access/)
 
 #### JSON Schema (4)
 
@@ -149,26 +149,26 @@ Spectral rulesets for the provider's contracts.
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [Abortion Policy Api Authentication](https://apis.io/security/abortion-policy-api/abortion-policy-api-authentication/)
-- [Abortion Policy Api Domain Security](https://apis.io/security/abortion-policy-api/abortion-policy-api-domain-security/)
+- [Abortion Policy API Authentication](https://apis.io/security/abortion-policy-api/abortion-policy-api-authentication/)
+- [Abortion Policy API Domain Security](https://apis.io/security/abortion-policy-api/abortion-policy-api-domain-security/)
 
 #### Plans and pricing (1)
 
 Published plans, tiers and prices.
 
-- [Abortion Policy Api Plans Pricing](https://apis.io/plans/abortion-policy-api/abortion-policy-api-plans-pricing/)
+- [Abortion Policy API Plans Pricing](https://apis.io/plans/abortion-policy-api/abortion-policy-api-plans-pricing/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [Abortion Policy Api Rate Limits](https://apis.io/rate-limits/abortion-policy-api/abortion-policy-api-rate-limits/)
+- [Abortion Policy API Rate Limits](https://apis.io/rate-limits/abortion-policy-api/abortion-policy-api-rate-limits/)
 
 #### FinOps (1)
 
 What the API costs to run, by operation.
 
-- [Abortion Policy Api Finops](https://apis.io/finops/abortion-policy-api/abortion-policy-api-finops/)
+- [Abortion Policy API Finops](https://apis.io/finops/abortion-policy-api/abortion-policy-api-finops/)
 
 ## Where to find this API
 
@@ -183,18 +183,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 32.9** — thin · rubric 0.24.0 · scored 2026-10-17
+**Kin Score 33.6** — thin · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 53.6 |
-| Contract quality | 29.3 |
+| Contract quality | 26.8 |
 | Contract governance | 27.3 |
-| Operational transparency | 7.9 |
-| Developer ergonomics | 45.2 |
-| Access clarity | 28.9 |
+| Operational transparency | 7.1 |
+| Developer ergonomics | 46.4 |
+| Access clarity | 38.3 |
 
-**Agent readiness 35.4** — agent-ready
+**Agent readiness 30.6** — agent-ready
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -204,7 +204,7 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | MCP Server | — |
 | Auth Clarity | bearer (partial credit) |
 | Idempotency | na |
-| Error Semantics | verified |
+| Error Semantics | derived (partial credit) |
 | OpenAPI Examples | verified |
 | Rate Limit Signal | documented (partial credit) |
 | Event Surface Described | — |
@@ -217,8 +217,14 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Protected Resource Metadata | — |
 | Dynamic Client Registration | — |
 | Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+| MCP Tool Quality | na |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
-**Regulatory alignment 19.5** — Health
+**Regulatory alignment 14.8** — Health
 
 The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/abortion-policy-api/](https://apis.io/providers/abortion-policy-api/).
 
